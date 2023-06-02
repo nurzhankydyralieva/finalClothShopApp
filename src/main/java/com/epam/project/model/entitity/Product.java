@@ -27,7 +27,6 @@ public class Product {
     @JoinColumn(name = "category_id")
     @JsonIgnore
     private Category categoryId;
-//    @Column(name = "category_id")
-//    private Integer categoryId;
+
 }
 
