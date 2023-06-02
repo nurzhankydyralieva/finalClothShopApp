@@ -1,5 +1,6 @@
 package com.epam.project.model.entitity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,11 +23,11 @@ public class Product {
     private Integer price;
     @Column(name = "quantity")
     private Integer quantity;
-    //    @ManyToOne(targetEntity = Category.class,fetch = FetchType.EAGER)
-//    @JoinColumn(name = "category_id")
-//    @JsonIgnore
-//    private Category categoryId;
-    @Column(name = "category_id")
-    private Integer categoryId;
+    @ManyToOne(targetEntity = Category.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "category_id")
+    @JsonIgnore
+    private Category categoryId;
+//    @Column(name = "category_id")
+//    private Integer categoryId;
 }
 
