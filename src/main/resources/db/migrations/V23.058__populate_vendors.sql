@@ -1,0 +1,4 @@
+INSERT INTO vendors(name)
+VALUES ('LOUIS VUITTON');
+INSERT INTO vendors(name)
+VALUES ('BMW');
