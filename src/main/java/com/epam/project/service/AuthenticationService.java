@@ -1,8 +1,8 @@
 package com.epam.project.service;
 
-import com.epam.project.model.entitity.AuthenticationRequest;
-import com.epam.project.model.entitity.AuthenticationResponse;
-import com.epam.project.model.entitity.RegisterRequest;
+import com.epam.project.model.entity.AuthenticationRequest;
+import com.epam.project.model.entity.AuthenticationResponse;
+import com.epam.project.model.entity.RegisterRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 

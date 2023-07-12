@@ -35,8 +35,9 @@ public class VendorController {
         return vendorService.update(vendorDto);
     }
 
-        @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id) {
+
         vendorService.deleteById(id);
     }
 

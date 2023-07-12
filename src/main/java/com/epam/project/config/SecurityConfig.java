@@ -50,6 +50,12 @@ public class SecurityConfig {
                 .requestMatchers(PUT, "/users/update").hasAuthority(VENDOR_UPDATE.name())
                 .requestMatchers(DELETE, "/users/{id}").hasAuthority(VENDOR_DELETE.name())
 
+                .requestMatchers(GET, "/users/all").hasAuthority(BUYER_READ.name())
+                .requestMatchers(GET, "/users/{id}").hasAuthority(BUYER_READ.name())
+                .requestMatchers(POST, "/users/save").hasAuthority(BUYER_CREATE.name())
+                .requestMatchers(PUT, "/users/update").hasAuthority(BUYER_UPDATE.name())
+                .requestMatchers(DELETE, "/users/{id}").hasAuthority(BUYER_DELETE.name())
+
 
                 .anyRequest()
                 .authenticated()

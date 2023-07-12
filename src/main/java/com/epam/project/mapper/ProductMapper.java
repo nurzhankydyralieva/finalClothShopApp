@@ -2,7 +2,7 @@ package com.epam.project.mapper;
 
 
 import com.epam.project.model.dto.ProductDto;
-import com.epam.project.model.entitity.Product;
+import com.epam.project.model.entity.Product;
 import org.mapstruct.Mapper;
 
 import java.util.List;

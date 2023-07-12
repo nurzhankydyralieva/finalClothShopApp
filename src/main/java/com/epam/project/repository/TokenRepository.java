@@ -1,6 +1,6 @@
 package com.epam.project.repository;
 
-import com.epam.project.model.entitity.Token;
+import com.epam.project.model.entity.Token;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

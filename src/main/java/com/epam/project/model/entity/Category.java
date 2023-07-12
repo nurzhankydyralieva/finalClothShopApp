@@ -1,29 +1,26 @@
-package com.epam.project.model.entitity;
+package com.epam.project.model.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "products")
-public class Product {
+@Table(name = "categories")
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
     @Column(name = "name")
     private String name;
-    @Column(name = "price")
-    private Integer price;
-    @Column(name = "quantity")
-    private Integer quantity;
-
-    @Column(name = "category_id")
-    private Long categoryId;
+    @ManyToOne(cascade =CascadeType.ALL)
+    @JoinColumn(name = "products_id")
+    private  Product product;
 }
-

@@ -22,7 +22,7 @@ public enum Role {
 
             )
     ),
-    VENDOR(
+     VENDOR(
             Set.of(
                     VENDOR_READ,
                     VENDOR_UPDATE,

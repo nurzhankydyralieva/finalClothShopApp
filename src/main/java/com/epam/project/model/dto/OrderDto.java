@@ -1,10 +1,11 @@
 package com.epam.project.model.dto;
 
+import com.epam.project.model.entity.Product;
 import com.epam.project.model.enums.Status;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 
 @Data
 public class OrderDto {
@@ -13,5 +14,6 @@ public class OrderDto {
     private LocalDate createdAt;
     private Status status;
     private boolean complete;
-    private List<ProductDto> items;
+    private ProductDto items;
+    private UserDto user;
 }

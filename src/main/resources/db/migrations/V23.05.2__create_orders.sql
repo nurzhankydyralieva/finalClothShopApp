@@ -7,5 +7,7 @@ CREATE TABLE orders
     created_at DATE,
     complete   BOOLEAN,
     status     VARCHAR(50),
-    items      VARCHAR(100)
+--     items      VARCHAR(100),
+    product_id      BIGINT,
+    user_id      BIGINT
 );

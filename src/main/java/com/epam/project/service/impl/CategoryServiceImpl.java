@@ -2,7 +2,7 @@ package com.epam.project.service.impl;
 
 import com.epam.project.mapper.CategoryMapper;
 import com.epam.project.model.dto.CategoryDto;
-import com.epam.project.model.entitity.Category;
+import com.epam.project.model.entity.Category;
 import com.epam.project.repository.CategoryRepository;
 import com.epam.project.service.CategoryService;
 import lombok.RequiredArgsConstructor;

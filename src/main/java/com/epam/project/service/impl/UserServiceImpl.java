@@ -3,10 +3,14 @@ package com.epam.project.service.impl;
 import com.epam.project.exception.NotFoundException;
 import com.epam.project.mapper.UserMapper;
 import com.epam.project.model.dto.UserDto;
-import com.epam.project.model.entitity.User;
+import com.epam.project.model.entity.AuthenticationResponse;
+import com.epam.project.model.entity.User;
 import com.epam.project.repository.UserRepository;
 import com.epam.project.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -51,4 +55,6 @@ public class UserServiceImpl implements UserService {
     public void deleteById(Long id) {
         userRepository.deleteById(id);
     }
+
+
 }

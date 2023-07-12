@@ -1,4 +1,4 @@
-package com.epam.project.model.entitity;
+package com.epam.project.model.entity;
 
 import com.epam.project.model.enums.Role;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RegisterRequest {
     private Long id;
-    private String userName;
+    private String userLoginName;
     private String firstName;
     private String lastName;
     private String email;

@@ -3,14 +3,13 @@ package com.epam.project.service.impl;
 
 import com.epam.project.mapper.VendorMapper;
 import com.epam.project.model.dto.VendorDto;
-import com.epam.project.model.entitity.Vendor;
+import com.epam.project.model.entity.Vendor;
 import com.epam.project.repository.VendorRepository;
 import com.epam.project.service.VendorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -53,3 +52,6 @@ public class VendorServiceImpl implements VendorService {
     }
 
 }
+
+
+

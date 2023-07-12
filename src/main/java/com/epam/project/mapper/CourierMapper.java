@@ -2,7 +2,7 @@ package com.epam.project.mapper;
 
 
 import com.epam.project.model.dto.CourierDto;
-import com.epam.project.model.entitity.Courier;
+import com.epam.project.model.entity.Courier;
 import org.mapstruct.Mapper;
 
 import java.util.List;

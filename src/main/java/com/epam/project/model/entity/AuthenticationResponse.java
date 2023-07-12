@@ -1,4 +1,4 @@
-package com.epam.project.model.entitity;
+package com.epam.project.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

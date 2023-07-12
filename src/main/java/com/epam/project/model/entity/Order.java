@@ -1,16 +1,20 @@
-package com.epam.project.model.entitity;
+package com.epam.project.model.entity;
 
 
 import com.epam.project.model.enums.Status;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -29,10 +33,11 @@ public class Order {
     private Status status;
     @Column(name = "complete")
     private boolean complete;
-    @OneToMany(targetEntity = Product.class, cascade = CascadeType.PERSIST)
-    @JoinTable(name = "orders_products",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "products_id"))
-    private List<Product> items;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "product_id")
+    private Product items;
+    @ManyToOne(cascade =  CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private User user;
 
 }

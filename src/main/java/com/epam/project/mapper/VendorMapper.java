@@ -2,8 +2,8 @@ package com.epam.project.mapper;
 
 
 import com.epam.project.model.dto.VendorDto;
-import com.epam.project.model.entitity.Courier;
-import com.epam.project.model.entitity.Vendor;
+import com.epam.project.model.entity.Courier;
+import com.epam.project.model.entity.Vendor;
 import org.mapstruct.Mapper;
 
 import java.util.List;

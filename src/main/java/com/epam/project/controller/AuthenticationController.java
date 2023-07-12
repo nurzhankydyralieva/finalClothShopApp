@@ -1,14 +1,21 @@
 package com.epam.project.controller;
 
-import com.epam.project.model.entitity.AuthenticationRequest;
-import com.epam.project.model.entitity.AuthenticationResponse;
-import com.epam.project.model.entitity.RegisterRequest;
+import com.epam.project.model.entity.AuthenticationRequest;
+import com.epam.project.model.entity.AuthenticationResponse;
+import com.epam.project.model.entity.RegisterRequest;
 import com.epam.project.service.AuthenticationService;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,4 +46,16 @@ public class AuthenticationController {
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         service.refreshToken(request, response);
     }
+
+    private String getUserLoginName() {
+        Object authentication = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (authentication instanceof UserDetails) {
+            String login = ((UserDetails) authentication).getUsername();
+            return login;
+        } else {
+            String login = authentication.toString();
+            return login;
+        }
+    }
+
 }

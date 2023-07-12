@@ -2,7 +2,7 @@ package com.epam.project.service.impl;
 
 import com.epam.project.mapper.BasketMapper;
 import com.epam.project.model.dto.BasketDto;
-import com.epam.project.model.entitity.Basket;
+import com.epam.project.model.entity.Basket;
 import com.epam.project.repository.BasketRepository;
 import com.epam.project.service.BasketService;
 import lombok.RequiredArgsConstructor;

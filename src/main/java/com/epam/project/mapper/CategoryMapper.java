@@ -2,9 +2,9 @@ package com.epam.project.mapper;
 
 
 import com.epam.project.model.dto.CategoryDto;
-import com.epam.project.model.entitity.Category;
+import com.epam.project.model.entity.Category;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+
 
 import java.util.List;
 

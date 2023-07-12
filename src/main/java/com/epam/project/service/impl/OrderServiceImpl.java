@@ -2,7 +2,7 @@ package com.epam.project.service.impl;
 
 import com.epam.project.mapper.OrderMapper;
 import com.epam.project.model.dto.OrderDto;
-import com.epam.project.model.entitity.Order;
+import com.epam.project.model.entity.Order;
 import com.epam.project.repository.OrderRepository;
 import com.epam.project.service.OrderService;
 import lombok.RequiredArgsConstructor;

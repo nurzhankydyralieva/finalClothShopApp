@@ -1,6 +1,6 @@
 package com.epam.project.model.dto;
 
-import com.epam.project.model.entitity.User;
+import com.epam.project.model.entity.User;
 import com.epam.project.model.enums.TokenType;
 import lombok.Data;
 

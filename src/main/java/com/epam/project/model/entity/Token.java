@@ -1,4 +1,4 @@
-package com.epam.project.model.entitity;
+package com.epam.project.model.entity;
 
 import com.epam.project.model.enums.TokenType;
 import com.fasterxml.jackson.annotation.JsonIgnore;

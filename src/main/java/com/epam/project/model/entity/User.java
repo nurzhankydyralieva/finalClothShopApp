@@ -1,18 +1,16 @@
-package com.epam.project.model.entitity;
+package com.epam.project.model.entity;
 
 import com.epam.project.model.enums.Role;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,25 +22,24 @@ public class User implements UserDetails {
     @Column(name = "id")
     private Long id;
     @Column(name = "user_name")
-    private String userName;
+    private String userLoginName;
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
     @Column(name = "email")
     private String email;
-
-    @Column(name = "password")
-    private String password;
     @Column(name = "phone")
     private String phone;
-    @OneToMany(targetEntity = Order.class, cascade = CascadeType.PERSIST)
-    @JoinTable(name = "users_orders",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "order_id"))
-    private List<Order> orders;
+    @Column(name = "password")
+    private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
+    @OneToMany(cascade = CascadeType.ALL)
+    private Set<Order> orders;
+    @OneToMany(cascade = CascadeType.ALL)
+    private Set<Product> products;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return role.getAuthorities();
@@ -55,7 +52,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return userLoginName;
     }
 
     @Override
@@ -77,5 +74,4 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
 }

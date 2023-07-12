@@ -1,4 +1,4 @@
-package com.epam.project.model.entitity;
+package com.epam.project.model.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

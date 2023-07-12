@@ -1,7 +1,7 @@
 package com.epam.project.repository;
 
 
-import com.epam.project.model.entitity.Category;
+import com.epam.project.model.entity.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

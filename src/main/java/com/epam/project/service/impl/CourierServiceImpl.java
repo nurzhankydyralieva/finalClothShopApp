@@ -2,7 +2,7 @@ package com.epam.project.service.impl;
 
 import com.epam.project.mapper.CourierMapper;
 import com.epam.project.model.dto.CourierDto;
-import com.epam.project.model.entitity.Courier;
+import com.epam.project.model.entity.Courier;
 import com.epam.project.repository.CourierRepository;
 import com.epam.project.service.CourierService;
 import lombok.RequiredArgsConstructor;

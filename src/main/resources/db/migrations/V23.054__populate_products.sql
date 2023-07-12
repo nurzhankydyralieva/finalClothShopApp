@@ -1,4 +1,6 @@
-INSERT INTO products(name, price, quantity, category_id)
-VALUES ('Dress', '2000', '1', '1');
-INSERT INTO products(name, price, quantity, category_id)
-VALUES ('Car', '5555', '1', '2');
+INSERT INTO products(product_name, price, quantity)
+VALUES ('Dress', '2000', '1');
+INSERT INTO products(product_name, price, quantity)
+VALUES ('Car', '5555', '1');
+INSERT INTO products(product_name, price, quantity)
+VALUES ('House', '8888', '1');

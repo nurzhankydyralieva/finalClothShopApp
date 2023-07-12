@@ -1,7 +1,7 @@
 package com.epam.project.mapper;
 
 import com.epam.project.model.dto.TokenDto;
-import com.epam.project.model.entitity.Token;
+import com.epam.project.model.entity.Token;
 import org.mapstruct.Mapper;
 
 import java.util.List;

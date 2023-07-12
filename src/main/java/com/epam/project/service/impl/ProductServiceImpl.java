@@ -2,7 +2,7 @@ package com.epam.project.service.impl;
 
 import com.epam.project.mapper.ProductMapper;
 import com.epam.project.model.dto.ProductDto;
-import com.epam.project.model.entitity.Product;
+import com.epam.project.model.entity.Product;
 import com.epam.project.repository.ProductRepository;
 import com.epam.project.service.ProductService;
 import lombok.RequiredArgsConstructor;

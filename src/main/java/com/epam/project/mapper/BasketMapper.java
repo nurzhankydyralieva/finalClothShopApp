@@ -2,7 +2,7 @@ package com.epam.project.mapper;
 
 
 import com.epam.project.model.dto.BasketDto;
-import com.epam.project.model.entitity.Basket;
+import com.epam.project.model.entity.Basket;
 import org.mapstruct.Mapper;
 
 import java.util.List;

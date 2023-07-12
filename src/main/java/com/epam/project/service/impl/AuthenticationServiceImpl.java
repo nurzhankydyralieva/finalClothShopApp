@@ -1,6 +1,6 @@
 package com.epam.project.service.impl;
 
-import com.epam.project.model.entitity.*;
+import com.epam.project.model.entity.*;
 import com.epam.project.model.enums.TokenType;
 import com.epam.project.repository.TokenRepository;
 import com.epam.project.repository.UserRepository;
@@ -29,7 +29,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public AuthenticationResponse register(RegisterRequest request) {
         var user = User.builder()
-                .userName(request.getUserName())
+                .userLoginName(request.getUserLoginName() )
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .phone(request.getPhone())
@@ -51,11 +51,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
+                        request.getUserLoginName(),
                         request.getPassword()
                 )
         );
-        var user = repository.findByEmail(request.getEmail()).orElseThrow();
+        var user = repository.findByUserLoginName(request.getUserLoginName())
+                .orElseThrow(()->new RuntimeException("User not found"));
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
         revokeAllUserTokens(user);
@@ -95,14 +96,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         final String refreshToken;
-        final String userEmail;
+        final String userLoginName;
         if (authHeader == null || !authHeader.startsWith("Bearer ")){
             return;
         }
         refreshToken = authHeader.substring(7);
-        userEmail =jwtService.extractUsername(refreshToken);
-        if (userEmail!=null){
-            var user = this.repository.findByEmail(userEmail).orElseThrow();
+        userLoginName =jwtService.extractUsername(refreshToken);
+        if (userLoginName!=null){
+            var user = this.repository.findByUserLoginName(userLoginName).orElseThrow();
             if (jwtService.isTokenValid(refreshToken,user)){
                 var accessToken = jwtService.generateToken(user);
                 revokeAllUserTokens(user);
