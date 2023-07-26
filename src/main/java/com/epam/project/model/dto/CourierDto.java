@@ -1,10 +1,12 @@
-package com.epam.project.model.entitity;
+package com.epam.project.model.dto;
 
-public class Courier {
+import lombok.Data;
+
+@Data
+public class CourierDto {
     private Long id;
     private String firstName;
     private String lastName;
     private String phoneNumber;
     private String idNumber;
-
 }
