@@ -1,4 +1,4 @@
-package com.epam.project.model.entity;
+package com.epam.project.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AuthenticationRequest {
 
-    private String userLoginName;
+    private String login;
     private String password;
 }

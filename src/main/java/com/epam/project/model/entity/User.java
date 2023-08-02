@@ -2,7 +2,11 @@ package com.epam.project.model.entity;
 
 import com.epam.project.model.enums.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,7 +33,7 @@ public class User implements UserDetails {
     @Column(name = "id")
     private UUID id;
     @Column(name = "user_name")
-    private String userLoginName;
+    private String login;
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")
@@ -42,13 +46,11 @@ public class User implements UserDetails {
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
-    @OneToMany(cascade = CascadeType.ALL)
-    private Set<Order> orders;
-    @OneToMany(cascade = CascadeType.ALL)
-    private Set<Product> products;
+//    @OneToMany(cascade = CascadeType.ALL)
+//    private Set<Order> orders;
+//    @OneToMany(cascade = CascadeType.ALL)
+//    private Set<Product> products;
     @OneToMany(mappedBy = "user")
-    //  @JsonManagedReference(value = "user")
-    @JsonIgnore
     private List<Token> tokens;
 
     @Override
@@ -65,13 +67,9 @@ public class User implements UserDetails {
         return id;
     }
 
-//    public Long getId() {
-//        return id;
-//    }
-
     @Override
     public String getUsername() {
-        return userLoginName;
+        return login;
     }
 
     @Override

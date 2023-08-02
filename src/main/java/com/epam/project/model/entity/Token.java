@@ -1,6 +1,8 @@
 package com.epam.project.model.entity;
 
 import com.epam.project.model.enums.TokenType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,9 +18,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @Entity
 public class Token {
-    //        @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    public Integer id;
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
@@ -33,7 +32,7 @@ public class Token {
     public boolean expired;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-//     @JsonBackReference(value = "user_id")
+    @JsonIgnore
     public User user;
 
 }

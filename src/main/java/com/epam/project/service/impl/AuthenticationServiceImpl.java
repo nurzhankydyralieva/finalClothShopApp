@@ -1,5 +1,8 @@
 package com.epam.project.service.impl;
 
+import com.epam.project.model.dto.AuthenticationRequest;
+import com.epam.project.model.dto.AuthenticationResponse;
+import com.epam.project.model.dto.RegisterRequest;
 import com.epam.project.model.entity.*;
 import com.epam.project.model.enums.TokenType;
 import com.epam.project.repository.TokenRepository;
@@ -28,7 +31,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     public AuthenticationResponse register(RegisterRequest request) {
         var user = User.builder()
-                .userLoginName(request.getUserLoginName())
+                .login(request.getLogin())
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .email(request.getEmail())
@@ -47,15 +50,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .build();
     }
 
+
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         manager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        request.getUserLoginName(),
+                        request.getLogin(),
                         request.getPassword()
                 )
         );
-        var user = repository.findByUserLoginName(request.getUserLoginName())
-                .orElseThrow();
+        var user = repository.findUserByLogin(request.getLogin()).orElseThrow();
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
         revokeAllUserTokens(user);
@@ -78,7 +81,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     private void revokeAllUserTokens(User user) {
-        // var validUserTokens = tokenRepository.findAllValidTokenByUser(user.getId());
+
         var validUserTokens = tokenRepository.findAllValidTokenByUser(user.getId());
         if (validUserTokens.isEmpty())
             return;
@@ -99,7 +102,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         refreshToken = authHeader.substring(7);
         userName = jwtService.extractUserName(refreshToken);
         if (userName != null) {
-            var user = this.repository.findByUserLoginName(userName).orElseThrow();
+            var user = this.repository.findUserByLogin(userName).orElseThrow();
 
             if (jwtService.isTokenValid(refreshToken, user)) {
                 var accessToken = jwtService.generateToken(user);

@@ -1,12 +1,14 @@
 package com.epam.project.controller;
 
-import com.epam.project.model.entity.AuthenticationRequest;
-import com.epam.project.model.entity.AuthenticationResponse;
-import com.epam.project.model.entity.RegisterRequest;
+import com.epam.project.model.dto.AuthenticationRequest;
+import com.epam.project.model.dto.AuthenticationResponse;
+import com.epam.project.model.dto.RegisterRequest;
 import com.epam.project.service.impl.AuthenticationServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,11 +23,19 @@ import java.io.IOException;
 public class AuthenticationController {
     private final AuthenticationServiceImpl service;
 
+
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(
-            @RequestBody RegisterRequest request) {
-        return ResponseEntity.ok(service.register(request));
+    public ResponseEntity<String> register(
+            @RequestBody @Valid RegisterRequest request) {
+        service.register(request);
+        return ResponseEntity.ok("User successfully created");
     }
+
+//    @PostMapping("/register")
+//    public ResponseEntity<AuthenticationResponse> register(
+//            @RequestBody @Valid RegisterRequest request) {
+//        return new ResponseEntity<>(service.register(request), HttpStatus.CREATED);
+//    }
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(
