@@ -1,9 +1,12 @@
 package com.epam.project.service.impl;
 
+import com.epam.project.exceptions.validation.RegistrationValidation;
 import com.epam.project.model.dto.AuthenticationRequest;
 import com.epam.project.model.dto.AuthenticationResponse;
 import com.epam.project.model.dto.RegisterRequest;
-import com.epam.project.model.entity.*;
+import com.epam.project.model.dto.RegistrationResponse;
+import com.epam.project.model.entity.Token;
+import com.epam.project.model.entity.User;
 import com.epam.project.model.enums.TokenType;
 import com.epam.project.repository.TokenRepository;
 import com.epam.project.repository.UserRepository;
@@ -13,6 +16,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,8 +33,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager manager;
     private final TokenRepository tokenRepository;
+    private final RegistrationValidation validation;
 
-    public AuthenticationResponse register(RegisterRequest request) {
+    public ResponseEntity<RegistrationResponse> register(RegisterRequest request) {
+        validation.validationRequest(request);
         var user = User.builder()
                 .login(request.getLogin())
                 .firstName(request.getFirstName())
@@ -42,12 +49,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         var saveUser = repository.save(user);
         var jwtToken = jwtService.generateToken(user);
-        var refreshToken = jwtService.generateRefreshToken(user);
+
         saveUserToken(saveUser, jwtToken);
-        return AuthenticationResponse.builder()
-                .accessToken(jwtToken)
-                .refreshToken(refreshToken)
-                .build();
+        return new ResponseEntity<>(RegistrationResponse.builder()
+                .data("Successfully created one new user")
+                .build(), HttpStatus.OK);
+
+
     }
 
 

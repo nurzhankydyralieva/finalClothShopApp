@@ -3,6 +3,8 @@ package com.epam.project.controller;
 import com.epam.project.model.dto.AuthenticationRequest;
 import com.epam.project.model.dto.AuthenticationResponse;
 import com.epam.project.model.dto.RegisterRequest;
+
+import com.epam.project.model.dto.RegistrationResponse;
 import com.epam.project.service.impl.AuthenticationServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -24,18 +26,19 @@ public class AuthenticationController {
     private final AuthenticationServiceImpl service;
 
 
-    @PostMapping("/register")
-    public ResponseEntity<String> register(
-            @RequestBody @Valid RegisterRequest request) {
-        service.register(request);
-        return ResponseEntity.ok("User successfully created");
-    }
-
 //    @PostMapping("/register")
-//    public ResponseEntity<AuthenticationResponse> register(
+//    public ResponseEntity<String> register(
 //            @RequestBody @Valid RegisterRequest request) {
-//        return new ResponseEntity<>(service.register(request), HttpStatus.CREATED);
+//        service.register(request);
+//        return ResponseEntity.ok("User successfully created");
 //    }
+
+    @PostMapping("/register")
+    public ResponseEntity<RegistrationResponse> register(
+            @RequestBody  RegisterRequest request) {
+        ResponseEntity<RegistrationResponse> response = service.register(request);
+        return response;
+    }
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(

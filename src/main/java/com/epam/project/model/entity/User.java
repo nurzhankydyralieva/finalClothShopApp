@@ -46,10 +46,10 @@ public class User implements UserDetails {
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
-//    @OneToMany(cascade = CascadeType.ALL)
-//    private Set<Order> orders;
-//    @OneToMany(cascade = CascadeType.ALL)
-//    private Set<Product> products;
+    @OneToMany(cascade = CascadeType.ALL)
+    private Set<Order> orders;
+    @OneToMany(cascade = CascadeType.ALL)
+    private Set<Product> products;
     @OneToMany(mappedBy = "user")
     private List<Token> tokens;
 

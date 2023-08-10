@@ -5,7 +5,6 @@ import com.epam.project.model.dto.UserCreateDto;
 import com.epam.project.model.dto.UserDto;
 import com.epam.project.service.UserService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,11 +40,9 @@ public class UserController {
     }
 
 
-
-
     @PostMapping("/save")
     @PreAuthorize("hasAuthority('buyer:create')")
-    public ResponseEntity<UserCreateDto> save(@RequestBody @Valid UserCreateDto userDto) {
+    public ResponseEntity<UserCreateDto> save(@RequestBody UserCreateDto userDto) {
         return new ResponseEntity<>(userService.save(userDto), HttpStatus.CREATED);
     }
 
