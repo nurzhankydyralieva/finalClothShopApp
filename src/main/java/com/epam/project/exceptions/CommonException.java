@@ -12,4 +12,5 @@ public class CommonException extends RuntimeException {
     private final Code codeStatus;
     private final String message;
     private final HttpStatus httpStatus;
+
 }

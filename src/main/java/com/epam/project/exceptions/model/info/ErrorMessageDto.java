@@ -1,4 +1,4 @@
-package com.epam.project.exceptions.model;
+package com.epam.project.exceptions.model.info;
 
 import lombok.*;
 
