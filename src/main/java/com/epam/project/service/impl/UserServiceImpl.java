@@ -64,13 +64,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteById(UUID id) {
         userValidation.deleteValidator(id);
-//        User user = userRepository.findUserById(id);
-//        if (user != null) {
-//            userRepository.deleteById(id);
-//            // logger.log(Level.INFO, "User with id: " + id + " deleted");
-//        } else {
-//            throw new UsernameNotFoundException("User with id: " + id + " not available in database");
-//        }
+    }
+
+    @Override
+    public List<UserDto> findByFirstName() {
+        var foundFirstName = userRepository.findUserByFirstName();
+        return userMapper.toDtos(foundFirstName);
     }
 
 

@@ -1,6 +1,6 @@
-DROP TABLE IF EXISTS couriers;
+DROP TABLE IF EXISTS courier;
 
-CREATE TABLE couriers
+CREATE TABLE courier
 (
     id         BIGSERIAL PRIMARY KEY,
     first_name VARCHAR(40) NOT NULL,

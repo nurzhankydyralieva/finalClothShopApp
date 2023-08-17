@@ -1,6 +1,6 @@
-DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS _order;
 
-CREATE TABLE orders
+CREATE TABLE _order
 (
     id         BIGSERIAL PRIMARY KEY,
     ship_date  DATE NOT NULL,
@@ -8,5 +8,5 @@ CREATE TABLE orders
     complete   BOOLEAN,
     status     VARCHAR(50),
     product_id      BIGINT,
-    user_id      UUID
+    _user_id      UUID
 );

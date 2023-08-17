@@ -8,6 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 
 @RestController
@@ -27,7 +28,7 @@ public class VendorController {
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('vendor:read')")
     public VendorDto findById(@PathVariable Long id) {
-        return vendorService.findById(id);
+        return vendorService.findVendorById(id);
     }
 
     @PostMapping("/save")
@@ -45,6 +46,6 @@ public class VendorController {
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('vendor:delete')")
     public void deleteById(@PathVariable Long id) {
-        vendorService.deleteById(id);
+        vendorService.deleteVendorById(id);
     }
 }

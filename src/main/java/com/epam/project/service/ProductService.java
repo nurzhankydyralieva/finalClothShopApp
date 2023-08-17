@@ -3,6 +3,7 @@ package com.epam.project.service;
 import com.epam.project.model.dto.ProductDto;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface ProductService {
     List<ProductDto> findAll();
@@ -13,5 +14,7 @@ public interface ProductService {
 
     ProductDto update(ProductDto productDto);
 
-    void deleteById(Long id);
+//    void deleteById(Long id);
+  void deleteByVendorId(Long id);
+
 }

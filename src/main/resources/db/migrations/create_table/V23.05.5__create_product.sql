@@ -1,6 +1,6 @@
-DROP TABLE IF EXISTS products;
+DROP TABLE IF EXISTS product;
 
-CREATE TABLE products
+CREATE TABLE product
 (
     id           BIGSERIAL PRIMARY KEY,
     product_name VARCHAR(40) NOT NULL,
@@ -8,6 +8,6 @@ CREATE TABLE products
     quantity     INT         NOT NULL,
     order_id     BIGINT,
     vendor_id    BIGINT,
-    user_id      UUID
+    _user_id      UUID
 
 );

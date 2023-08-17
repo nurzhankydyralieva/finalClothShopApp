@@ -1,6 +1,7 @@
 package com.epam.project.controller;
 
 import com.epam.project.model.dto.ProductDto;
+import com.epam.project.repository.ProductRepository;
 import com.epam.project.service.ProductService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -44,6 +46,9 @@ public class ProductController {
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('buyer:delete','vendor:delete')")
     public void deleteById(@PathVariable Long id) {
-        productService.deleteById(id);
+//        productService.deleteById(id);
+        productService.deleteByVendorId(id);
     }
+
+
 }

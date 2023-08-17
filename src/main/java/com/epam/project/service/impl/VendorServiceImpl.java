@@ -1,22 +1,17 @@
 package com.epam.project.service.impl;
 
 
+import com.epam.project.exceptions.UserNotFoundException;
 import com.epam.project.mapper.VendorMapper;
 import com.epam.project.model.dto.VendorDto;
-import com.epam.project.model.entity.User;
 import com.epam.project.model.entity.Vendor;
-import com.epam.project.repository.UserRepository;
 import com.epam.project.repository.VendorRepository;
 import com.epam.project.service.VendorService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -30,10 +25,13 @@ public class VendorServiceImpl implements VendorService {
     }
 
     @Override
-    public VendorDto findById(Long id) {
-        Vendor vendor = vendorRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Vendor with id " + id + " not available"));
-        return vendorMapper.toDto(vendor);
+    public VendorDto findVendorById(Long id) {
+        Vendor vendor = vendorRepository.findVendorById(id);
+        if (vendor != null) {
+            VendorDto vendorDto = vendorMapper.toDto(vendor);
+            return vendorDto;
+        }
+        throw new UserNotFoundException("Vendor with id " + id + " not available");
     }
 
     @Override
@@ -54,7 +52,7 @@ public class VendorServiceImpl implements VendorService {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteVendorById(Long id) {
         vendorRepository.deleteById(id);
     }
 

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "categories")
+@Table(name = "category")
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,6 +18,6 @@ public class Category {
     @Column(name = "name")
     private String name;
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "products_id")
+    @JoinColumn(name = "product_id")
     private Product product;
 }

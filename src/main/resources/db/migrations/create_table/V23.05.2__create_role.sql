@@ -1,6 +1,6 @@
-DROP TABLE IF EXISTS roles;
+DROP TABLE IF EXISTS role;
 
-CREATE TABLE roles
+CREATE TABLE role
 (
     id   BIGINT PRIMARY KEY ,
     name VARCHAR(50)

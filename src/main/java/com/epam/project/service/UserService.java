@@ -2,6 +2,7 @@ package com.epam.project.service;
 
 import com.epam.project.model.dto.UserCreateDto;
 import com.epam.project.model.dto.UserDto;
+import com.epam.project.model.entity.User;
 
 import java.util.List;
 import java.util.UUID;
@@ -16,4 +17,5 @@ public interface UserService {
     UserDto update(UserDto userDto);
 
     void deleteById(UUID id);
+    List<UserDto> findByFirstName();
 }

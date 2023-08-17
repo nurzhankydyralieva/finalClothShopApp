@@ -1,6 +1,6 @@
-DROP TABLE IF EXISTS baskets;
+DROP TABLE IF EXISTS basket;
 
-CREATE TABLE baskets
+CREATE TABLE basket
 (
     id            BIGSERIAL  PRIMARY KEY,
     basket_number BIGINT

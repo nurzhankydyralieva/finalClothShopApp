@@ -58,5 +58,11 @@ public class UserController {
         userService.deleteById(id);
     }
 
+    @GetMapping("/first_name")
+    @PreAuthorize("hasAuthority('buyer:read')")
+    public ResponseEntity<List<UserDto>> findByFirstName() {
+        return ResponseEntity.ok(userService.findByFirstName());
+    }
+
 }
 

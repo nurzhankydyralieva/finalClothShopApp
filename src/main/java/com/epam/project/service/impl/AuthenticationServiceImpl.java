@@ -1,5 +1,6 @@
 package com.epam.project.service.impl;
 
+import com.epam.project.aspect.annotation.CustomAspectAnnotation;
 import com.epam.project.exceptions.validation.RegistrationValidation;
 import com.epam.project.model.dto.AuthenticationRequest;
 import com.epam.project.model.dto.AuthenticationResponse;
@@ -35,6 +36,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final TokenRepository tokenRepository;
     private final RegistrationValidation validation;
 
+    @CustomAspectAnnotation
     public ResponseEntity<RegistrationResponse> register(RegisterRequest request) {
         validation.validationRequest(request);
         var user = User.builder()

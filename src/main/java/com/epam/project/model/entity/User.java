@@ -25,7 +25,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "users")
+@Table(name = "_user")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(generator = "UUID")
@@ -45,13 +45,14 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
     @Enumerated(EnumType.STRING)
+    @Column(name = "role")
     private Role role;
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Order> orders;
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Product> products;
-    @OneToMany(mappedBy = "user")
-    private List<Token> tokens;
+//    @OneToMany(mappedBy = "user")
+//    private List<Token> tokens;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
