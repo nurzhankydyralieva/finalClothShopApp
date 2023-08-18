@@ -55,8 +55,6 @@ public class User implements UserDetails {
     private Set<Order> orders;
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Product> products;
-//    @OneToMany(mappedBy = "user")
-//    private List<Token> tokens;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

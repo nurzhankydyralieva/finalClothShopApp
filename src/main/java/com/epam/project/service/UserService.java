@@ -15,7 +15,7 @@ public interface UserService {
 
     UserCreateDto save(UserCreateDto userCreateDto);
 
-    UserDto update(UserDto userDto);
+    UserCreateDto update(UserCreateDto userCreateDto);
 
     void deleteById(UUID id);
     List<UserDto> findByFirstName();

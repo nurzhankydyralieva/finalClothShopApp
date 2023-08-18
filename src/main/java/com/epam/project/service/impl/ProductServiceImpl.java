@@ -25,6 +25,7 @@ import java.util.UUID;
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
+    private final VendorRepository vendorRepository;
 
     @Override
     public List<ProductDto> findAll() {
@@ -55,13 +56,8 @@ public class ProductServiceImpl implements ProductService {
         return productMapper.toDto(product);
     }
 
-//    @Override
-//    public void deleteById(Long id) {
-//        productRepository.deleteProductById(id);
-//    }
 
-    private final VendorRepository vendorRepository;
-
+//  Vendor может удалить только свои товары.
     @Override
     public void deleteByVendorId(Long id) {
         Vendor vendor = vendorRepository.findVendorById(id);
@@ -72,6 +68,4 @@ public class ProductServiceImpl implements ProductService {
             log.info("User with " + id + " deleted from db");
         }
     }
-
-
 }

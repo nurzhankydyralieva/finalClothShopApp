@@ -1,6 +1,7 @@
 package com.epam.project.controller;
 
 import com.epam.project.model.dto.OrderDto;
+import com.epam.project.model.dto.UserDto;
 import com.epam.project.service.OrderService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
@@ -30,21 +31,17 @@ public class OrderController {
         return orderService.findById(id);
     }
 
-//    @PostMapping("/save")
-//    @PreAuthorize("hasAuthority('buyer:create')")
-//    public OrderDto save(@RequestBody OrderDto orderDto) {
-//        return orderService.save(orderDto);
-//    }
 
     @PostMapping("/save/{id}")
     @PreAuthorize("hasAuthority('buyer:create')")
     public OrderDto save(@PathVariable UUID id, @RequestBody OrderDto orderDto) {
-        return orderService.saveOrder(orderDto,id);
+        return orderService.saveOrder(orderDto, id);
     }
-    @PutMapping("/update")
+
+    @PutMapping("/update/{id}")
     @PreAuthorize("hasAuthority('buyer:update')")
-    public OrderDto update(@RequestBody OrderDto orderDto) {
-        return orderService.update(orderDto);
+    public OrderDto update(@PathVariable UUID id, @RequestBody OrderDto orderDto) {
+        return orderService.update(orderDto, id);
     }
 
     @DeleteMapping("/{id}")
@@ -52,4 +49,5 @@ public class OrderController {
     public void deleteById(@PathVariable Long id) {
         orderService.deleteById(id);
     }
+
 }

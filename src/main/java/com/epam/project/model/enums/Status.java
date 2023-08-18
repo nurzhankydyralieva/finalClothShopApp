@@ -1,5 +1,11 @@
 package com.epam.project.model.enums;
 
 public enum Status {
-    PLACED, APPROVED, DELIVERED, BLOCKED,ACTIVE;
+    PLACED,
+    APPROVED,
+    DELIVERED,
+    CANCELLED,
+    RECEIVED,
+    BLOCKED,
+    ACTIVE;
 }

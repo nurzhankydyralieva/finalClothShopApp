@@ -46,8 +46,8 @@ public class UserController {
 
     @PutMapping("/update")
     @PreAuthorize("hasAuthority('buyer:update')")
-    public ResponseEntity<UserDto> update(@RequestBody UserDto userDto) {
-        return ResponseEntity.ok(userService.update(userDto));
+    public ResponseEntity<UserCreateDto> update(@RequestBody UserCreateDto userCreateDto) {
+        return ResponseEntity.ok(userService.update(userCreateDto));
     }
 
     @DeleteMapping("/{id}")

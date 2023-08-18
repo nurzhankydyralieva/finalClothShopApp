@@ -40,15 +40,12 @@ public class UserDto {
     @NotBlank
     @Pattern(regexp = "^\\d{10}$", message = "Mobile number should be 10 digits")
     private String phone;
-//    @NotBlank(message = "Password name should not be null")
-//    private String password;
     private Status status;
     private Role role;
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Order> orders;
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Product> products;
-//    @JsonIgnore
-//    private List<Token> tokens;
+
 
 }

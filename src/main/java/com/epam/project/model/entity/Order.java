@@ -25,6 +25,8 @@ public class Order {
     private LocalDate shipDate;
     @Column(name = "created_at")
     private LocalDate createdAt;
+    @Column(name = "updated_at")
+    private LocalDate updatedAt;
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -36,4 +38,5 @@ public class Order {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "_user_id")
     private User user;
+
 }

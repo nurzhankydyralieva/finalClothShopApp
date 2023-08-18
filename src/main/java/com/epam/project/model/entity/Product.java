@@ -27,7 +27,6 @@ public class Product {
     private Set<Category> categories;
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Order> orders;
-
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "vendor_id")
     private Vendor vendor;

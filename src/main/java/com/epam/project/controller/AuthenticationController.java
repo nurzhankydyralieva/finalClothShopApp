@@ -26,13 +26,6 @@ public class AuthenticationController {
     private final AuthenticationServiceImpl service;
 
 
-//    @PostMapping("/register")
-//    public ResponseEntity<String> register(
-//            @RequestBody @Valid RegisterRequest request) {
-//        service.register(request);
-//        return ResponseEntity.ok("User successfully created");
-//    }
-
     @PostMapping("/register")
     public ResponseEntity<RegistrationResponse> register(
             @RequestBody  RegisterRequest request) {

@@ -52,13 +52,13 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public UserDto update(UserDto userDto) {
-        if (!userRepository.existsById(userDto.getId())) {
-            throw new UsernameNotFoundException("There is no user with ID= " + userDto.getId() + " in database");
+    public UserCreateDto update(UserCreateDto userCreateDto) {
+        if (!userRepository.existsById(userCreateDto.getId())) {
+            throw new UsernameNotFoundException("There is no user with ID= " + userCreateDto.getId() + " in database");
         }
-        User user = userMapper.toEntity(userDto);
+        User user = userMapper.toCreateEntity(userCreateDto);
         user = userRepository.save(user);
-        return userMapper.toDto(user);
+        return userMapper.toCreateDto(user);
     }
 
     @Override
