@@ -2,6 +2,9 @@ package com.epam.project.model.dto;
 
 import com.epam.project.exceptions.validation.FirstNameValidation;
 import com.epam.project.model.enums.Role;
+import com.epam.project.model.enums.Status;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -32,5 +35,7 @@ public class RegisterRequest {
     private String phone;
     @NotBlank(message = "Password name should not be null")
     private String password;
+    @Enumerated(EnumType.STRING)
+    private Status status;
     private Role role;
 }

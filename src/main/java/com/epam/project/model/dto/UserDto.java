@@ -4,6 +4,7 @@ import com.epam.project.model.entity.Order;
 import com.epam.project.model.entity.Product;
 import com.epam.project.model.entity.Token;
 import com.epam.project.model.enums.Role;
+import com.epam.project.model.enums.Status;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.OneToMany;
@@ -41,6 +42,7 @@ public class UserDto {
     private String phone;
 //    @NotBlank(message = "Password name should not be null")
 //    private String password;
+    private Status status;
     private Role role;
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Order> orders;

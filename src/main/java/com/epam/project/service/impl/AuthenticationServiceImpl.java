@@ -1,7 +1,7 @@
 package com.epam.project.service.impl;
 
 import com.epam.project.aspect.annotation.CustomAspectAnnotation;
-import com.epam.project.exceptions.validation.RegistrationValidation;
+import com.epam.project.exceptions.validation.user_validation.RegistrationValidation;
 import com.epam.project.model.dto.AuthenticationRequest;
 import com.epam.project.model.dto.AuthenticationResponse;
 import com.epam.project.model.dto.RegisterRequest;
@@ -46,6 +46,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .email(request.getEmail())
                 .phone(request.getPhone())
                 .password(passwordEncoder.encode(request.getPassword()))
+                .status(request.getStatus())
                 .role(request.getRole())
                 .build();
 

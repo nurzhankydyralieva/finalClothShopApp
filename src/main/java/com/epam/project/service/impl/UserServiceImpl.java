@@ -2,7 +2,7 @@ package com.epam.project.service.impl;
 
 
 import com.epam.project.exceptions.UserNotFoundException;
-import com.epam.project.exceptions.validation.UserValidation;
+import com.epam.project.exceptions.validation.user_validation.UserValidation;
 import com.epam.project.mapper.UserMapper;
 import com.epam.project.model.dto.UserCreateDto;
 import com.epam.project.model.dto.UserDto;

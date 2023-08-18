@@ -2,6 +2,7 @@ package com.epam.project.exceptions.enums;
 
 public enum Code {
     REQUEST_VALIDATION_ERROR,
+    STATUS_VALIDATION_ERROR,
     NICKNAME_BUSY,
     INTERNAL_SERVER_ERROR,
     USER_NOT_FOUND,

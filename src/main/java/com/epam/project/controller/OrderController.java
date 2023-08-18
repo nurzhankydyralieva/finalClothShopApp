@@ -8,6 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,12 +30,17 @@ public class OrderController {
         return orderService.findById(id);
     }
 
-    @PostMapping("/save")
-    @PreAuthorize("hasAuthority('buyer:create')")
-    public OrderDto save(@RequestBody OrderDto orderDto) {
-        return orderService.save(orderDto);
-    }
+//    @PostMapping("/save")
+//    @PreAuthorize("hasAuthority('buyer:create')")
+//    public OrderDto save(@RequestBody OrderDto orderDto) {
+//        return orderService.save(orderDto);
+//    }
 
+    @PostMapping("/save/{id}")
+    @PreAuthorize("hasAuthority('buyer:create')")
+    public OrderDto save(@PathVariable UUID id, @RequestBody OrderDto orderDto) {
+        return orderService.saveOrder(orderDto,id);
+    }
     @PutMapping("/update")
     @PreAuthorize("hasAuthority('buyer:update')")
     public OrderDto update(@RequestBody OrderDto orderDto) {

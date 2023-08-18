@@ -28,11 +28,6 @@ public class UserController {
         return ResponseEntity.ok(userService.findAll());
     }
 
-    //    @GetMapping("/{id}")
-//    @PreAuthorize("hasAuthority('buyer:read')")
-//    public ResponseEntity<UserDto> findById(@PathVariable UUID id) {
-//        return ResponseEntity.ok(userService.findById(id));
-//    }
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('buyer:read')")
     public ResponseEntity<UserDto> findUserById(@PathVariable UUID id) {
@@ -45,6 +40,9 @@ public class UserController {
     public ResponseEntity<UserCreateDto> save(@RequestBody UserCreateDto userDto) {
         return new ResponseEntity<>(userService.save(userDto), HttpStatus.CREATED);
     }
+
+
+
 
     @PutMapping("/update")
     @PreAuthorize("hasAuthority('buyer:update')")

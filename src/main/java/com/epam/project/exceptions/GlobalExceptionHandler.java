@@ -48,7 +48,16 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(UserAlreadyExistsException.class)
     public ResponseEntity<ErrorResponse> handleUserAlreadyExistsException(UserAlreadyExistsException ex) {
-        log.info("Common Exception: {}", ex.toString());
+        log.info("User Already Exists Exception: {}", ex.toString());
+        return new ResponseEntity<>(ErrorResponse.builder().error(Error.builder()
+                .code(ex.getCodeStatus())
+                .message(ex.getMessage())
+                .build()).build(), ex.getHttpStatus());
+    }
+
+    @ExceptionHandler(StatusNotAllowedException.class)
+    public ResponseEntity<ErrorResponse> handleStatusNotAllowedException(StatusNotAllowedException ex) {
+        log.info("Status Not Allowed Exception: {}", ex.toString());
         return new ResponseEntity<>(ErrorResponse.builder().error(Error.builder()
                 .code(ex.getCodeStatus())
                 .message(ex.getMessage())

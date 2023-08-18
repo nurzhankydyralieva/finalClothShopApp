@@ -1,6 +1,7 @@
 package com.epam.project.model.entity;
 
 import com.epam.project.model.enums.Role;
+import com.epam.project.model.enums.Status;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -44,6 +45,9 @@ public class User implements UserDetails {
     private String phone;
     @Column(name = "password")
     private String password;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private Status status;
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
     private Role role;

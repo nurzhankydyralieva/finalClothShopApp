@@ -1,4 +1,4 @@
-package com.epam.project.exceptions.validation;
+package com.epam.project.exceptions.validation.user_validation;
 
 import com.epam.project.exceptions.UserAlreadyExistsException;
 import com.epam.project.exceptions.UserNotFoundException;
