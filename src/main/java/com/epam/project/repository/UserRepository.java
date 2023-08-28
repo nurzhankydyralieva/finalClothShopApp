@@ -18,6 +18,4 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
     boolean existsById(UUID id);
 
-    @Query(value = "SELECT u.firstName FROM User u")
-    List<User> findUserByFirstName();
 }

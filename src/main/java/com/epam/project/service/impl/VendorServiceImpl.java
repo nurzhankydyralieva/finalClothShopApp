@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -33,7 +32,6 @@ public class VendorServiceImpl implements VendorService {
         }
         throw new UserNotFoundException("Vendor with id " + id + " not available");
     }
-
     @Override
     public VendorDto save(VendorDto vendorDto) {
         Vendor vendor = vendorMapper.toEntity(vendorDto);

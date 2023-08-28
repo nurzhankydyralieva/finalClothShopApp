@@ -2,10 +2,8 @@ package com.epam.project.model.dto;
 
 import com.epam.project.model.entity.Order;
 import com.epam.project.model.entity.Product;
-import com.epam.project.model.entity.Token;
 import com.epam.project.model.enums.Role;
 import com.epam.project.model.enums.Status;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
@@ -13,14 +11,15 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDto {

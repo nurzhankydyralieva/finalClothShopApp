@@ -61,7 +61,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     }
 
-
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         manager.authenticate(
                 new UsernamePasswordAuthenticationToken(

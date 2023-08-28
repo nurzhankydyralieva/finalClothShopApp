@@ -2,12 +2,7 @@ package com.epam.project.model.entity;
 
 import com.epam.project.model.enums.Role;
 import com.epam.project.model.enums.Status;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,7 +12,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -55,6 +49,15 @@ public class User implements UserDetails {
     private Set<Order> orders;
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Product> products;
+
+
+
+    @PrePersist
+    public void checkStatus() {
+        if (status == null) {
+            status = Status.ACTIVE;
+        }
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

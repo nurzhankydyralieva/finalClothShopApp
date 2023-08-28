@@ -34,15 +34,11 @@ public class UserController {
         return ResponseEntity.ok(userService.findUserById(id));
     }
 
-
     @PostMapping("/save")
     @PreAuthorize("hasAuthority('buyer:create')")
     public ResponseEntity<UserCreateDto> save(@RequestBody UserCreateDto userDto) {
         return new ResponseEntity<>(userService.save(userDto), HttpStatus.CREATED);
     }
-
-
-
 
     @PutMapping("/update")
     @PreAuthorize("hasAuthority('buyer:update')")
@@ -55,12 +51,5 @@ public class UserController {
     public void deleteById(@PathVariable UUID id) {
         userService.deleteById(id);
     }
-
-    @GetMapping("/first_name")
-    @PreAuthorize("hasAuthority('buyer:read')")
-    public ResponseEntity<List<UserDto>> findByFirstName() {
-        return ResponseEntity.ok(userService.findByFirstName());
-    }
-
 }
 

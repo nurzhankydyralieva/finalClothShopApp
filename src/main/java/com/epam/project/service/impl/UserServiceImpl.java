@@ -25,6 +25,7 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final UserValidation userValidation;
 
+
     @Override
     public List<UserDto> findAll() {
         var users = userRepository.findAll();
@@ -36,14 +37,19 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findUserById(id);
         if (user != null) {
             return userMapper.toDto(user);
+        }else {
+            throw new UserNotFoundException("User with id " + id + "  is not available in database");
         }
-        throw new UserNotFoundException("User with id " + id + "  is not available in database");
+
     }
+
 
     @Override
     public UserCreateDto save(UserCreateDto userCreateDto) {
         userValidation.loginValidator(userCreateDto);
         User user = userMapper.toCreateEntity(userCreateDto);
+        //бэкенде поставить статус, чтоб работал
+        user.checkStatus();
         user = userRepository.save(user);
         UserCreateDto newUser = userMapper.toCreateDto(user);
         log.info("User saved to database");
@@ -66,11 +72,7 @@ public class UserServiceImpl implements UserService {
         userValidation.deleteValidator(id);
     }
 
-    @Override
-    public List<UserDto> findByFirstName() {
-        var foundFirstName = userRepository.findUserByFirstName();
-        return userMapper.toDtos(foundFirstName);
-    }
+
 
 
 }
