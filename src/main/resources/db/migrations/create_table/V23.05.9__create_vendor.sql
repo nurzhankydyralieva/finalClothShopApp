@@ -2,6 +2,6 @@ DROP TABLE IF EXISTS vendor;
 
 CREATE TABLE vendor
 (
-    id  BIGINT PRIMARY KEY,
+    id   BIGINT PRIMARY KEY,
     name VARCHAR(100) NOT NULL
 );

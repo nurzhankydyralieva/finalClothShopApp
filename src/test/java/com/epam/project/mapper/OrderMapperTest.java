@@ -3,9 +3,11 @@ package com.epam.project.mapper;
 import com.epam.project.model.dto.OrderDto;
 import com.epam.project.model.entity.Order;
 import com.epam.project.model.enums.Status;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.mapstruct.factory.Mappers;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -14,11 +16,13 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@DataJpaTest
+@RunWith(SpringRunner.class)
 class OrderMapperTest {
 
     @Test
+    @DisplayName("Test should map to dto")
     void toDto() {
+        //given
         Order order = Order.builder()
                 .id(2L)
                 .shipDate(LocalDate.now())
@@ -28,9 +32,10 @@ class OrderMapperTest {
                 .complete(true)
                 .build();
         OrderMapper orderMapper = Mappers.getMapper(OrderMapper.class);
-        assertNotNull(orderMapper);
-
+        //when
         OrderDto orderDto = orderMapper.toDto(order);
+        //then
+        assertNotNull(orderMapper);
         assertNotNull(orderDto);
         assertEquals(order.getId(), orderDto.getId());
         assertEquals(order.getShipDate(), orderDto.getShipDate());
@@ -41,7 +46,9 @@ class OrderMapperTest {
     }
 
     @Test
+    @DisplayName("Test should map to entity")
     void toEntity() {
+        //given
         OrderDto orderDto = OrderDto.builder()
                 .id(2L)
                 .shipDate(LocalDate.now())
@@ -51,9 +58,10 @@ class OrderMapperTest {
                 .complete(true)
                 .build();
         OrderMapper orderMapper = Mappers.getMapper(OrderMapper.class);
-        assertNotNull(orderMapper);
-
+        //when
         Order order = orderMapper.toEntity(orderDto);
+        //then
+        assertNotNull(orderMapper);
         assertNotNull(order);
         assertEquals(orderDto.getId(), order.getId());
         assertEquals(orderDto.getShipDate(), order.getShipDate());
@@ -64,6 +72,7 @@ class OrderMapperTest {
     }
 
     @Test
+    @DisplayName("Test should map to dtos")
     void toDtos() {
         Order order = Order.builder()
                 .id(2L)
@@ -74,11 +83,12 @@ class OrderMapperTest {
                 .complete(true)
                 .build();
         List<Order> orders = Arrays.asList(order);
-        assertNotNull(orders);
-
         OrderMapper orderMapper = Mappers.getMapper(OrderMapper.class);
-        assertNotNull(orderMapper);
+        //when
         List<OrderDto> orderDtos = orderMapper.toDtos(orders);
+        //then
+        assertNotNull(orders);
+        assertNotNull(orderMapper);
         assertNotNull(orderDtos);
         assertEquals(order.getId(), orderDtos.get(0).getId());
         assertEquals(order.getShipDate(), orderDtos.get(0).getShipDate());
@@ -89,7 +99,9 @@ class OrderMapperTest {
     }
 
     @Test
+    @DisplayName("Test should map to entities")
     void toEntities() {
+        //given
         OrderDto orderDto = OrderDto.builder()
                 .id(2L)
                 .shipDate(LocalDate.now())
@@ -99,11 +111,12 @@ class OrderMapperTest {
                 .complete(true)
                 .build();
         List<OrderDto> orderDtos = Arrays.asList(orderDto);
-        assertNotNull(orderDtos);
-
         OrderMapper orderMapper = Mappers.getMapper(OrderMapper.class);
-        assertNotNull(orderMapper);
+        //when
         List<Order> orders = orderMapper.toEntities(orderDtos);
+        //then
+        assertNotNull(orderDtos);
+        assertNotNull(orderMapper);
         assertNotNull(orders);
         assertEquals(orderDto.getId(), orders.get(0).getId());
         assertEquals(orderDto.getShipDate(), orders.get(0).getShipDate());

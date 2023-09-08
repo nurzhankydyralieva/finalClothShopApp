@@ -31,8 +31,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDto findById(Long id) {
-        Order order = orderRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("The order with id" + id + " not found"));
+//        Order order = orderRepository.findById(id)
+//                .orElseThrow(() -> new RuntimeException("The order with id " + id + " not found"));
+        Order order = orderRepository.findOrderById(id);
         return orderMapper.toDto(order);
     }
 
@@ -40,8 +41,10 @@ public class OrderServiceImpl implements OrderService {
     @OrderSaveAspectAnnotation
     @Override
     public OrderDto saveOrder(OrderDto orderDto, UUID id) {
-        Order order = orderMapper.toEntity(orderDto);
         validator.orderSaveValidation(orderDto, id);
+        Order order = orderMapper.toEntity(orderDto);
+        //бэкенде поставить статус, чтоб работал
+        order.checkOrderStatus();
         order = orderRepository.save(order);
         return orderMapper.toDto(order);
     }
@@ -55,9 +58,11 @@ public class OrderServiceImpl implements OrderService {
         order = orderRepository.save(order);
         return orderMapper.toDto(order);
     }
+
     @Override
     public void deleteById(Long id) {
-        orderRepository.deleteById(id);
+         orderRepository.deleteById(id);
+
     }
 
 }

@@ -1,9 +1,6 @@
 package com.epam.project.model.dto;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.Set;
 
@@ -11,6 +8,8 @@ import java.util.Set;
 @Setter
 @Builder
 @ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProductDto {
     private Long id;
     private String productName;

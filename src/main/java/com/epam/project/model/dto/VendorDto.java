@@ -2,14 +2,12 @@ package com.epam.project.model.dto;
 
 
 import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import lombok.ToString;
 
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 @Builder
 @ToString
 public class VendorDto {

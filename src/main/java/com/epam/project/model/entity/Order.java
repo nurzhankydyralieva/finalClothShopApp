@@ -37,4 +37,11 @@ public class Order {
     @JoinColumn(name = "_user_id")
     private User user;
 
+    @PrePersist
+    public void checkOrderStatus() {
+        if (status == null) {
+            status = Status.APPROVED;
+        }
+    }
+
 }

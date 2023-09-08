@@ -5,9 +5,11 @@ import com.epam.project.model.dto.UserDto;
 import com.epam.project.model.entity.User;
 import com.epam.project.model.enums.Role;
 import com.epam.project.model.enums.Status;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.mapstruct.factory.Mappers;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,11 +18,13 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@DataJpaTest
+@RunWith(SpringRunner.class)
 class UserMapperTest {
 
     @Test
+    @DisplayName("Test should map to dto")
     void toDto() {
+        //given
         User user = User.builder()
                 .id(UUID.randomUUID())
                 .login("Max")
@@ -31,13 +35,12 @@ class UserMapperTest {
                 .status(Status.ACTIVE)
                 .role(Role.BUYER)
                 .build();
-
         UserMapper mapper = Mappers.getMapper(UserMapper.class);
-        assertNotNull(mapper);
-
+        //when
         UserDto userDto = mapper.toDto(user);
+        //then
+        assertNotNull(mapper);
         assertNotNull(userDto);
-
         assertEquals(user.getId(), userDto.getId());
         assertEquals(user.getLogin(), userDto.getLogin());
         assertEquals(user.getFirstName(), userDto.getFirstName());
@@ -46,11 +49,12 @@ class UserMapperTest {
         assertEquals(user.getPhone(), userDto.getPhone());
         assertEquals(user.getStatus(), userDto.getStatus());
         assertEquals(user.getRole(), userDto.getRole());
-
     }
 
     @Test
+    @DisplayName("Test should map to entity")
     void toEntity() {
+        //given
         UserDto userDto = UserDto.builder()
                 .id(UUID.randomUUID())
                 .login("Sultan")
@@ -62,11 +66,11 @@ class UserMapperTest {
                 .role(Role.BUYER)
                 .build();
         UserMapper mapper = Mappers.getMapper(UserMapper.class);
-        assertNotNull(mapper);
-
+        //when
         User user = mapper.toEntity(userDto);
+        //then
+        assertNotNull(mapper);
         assertNotNull(user);
-
         assertEquals(userDto.getId(), user.getId());
         assertEquals(userDto.getLogin(), user.getLogin());
         assertEquals(userDto.getFirstName(), user.getFirstName());
@@ -75,12 +79,12 @@ class UserMapperTest {
         assertEquals(userDto.getPhone(), user.getPhone());
         assertEquals(userDto.getStatus(), user.getStatus());
         assertEquals(userDto.getRole(), user.getRole());
-
-
     }
 
     @Test
+    @DisplayName("Test should map to dtos")
     void toDtos() {
+        //given
         User user = User.builder()
                 .id(UUID.randomUUID())
                 .login("Sarah")
@@ -92,13 +96,12 @@ class UserMapperTest {
                 .role(Role.BUYER)
                 .build();
         List<User> users = Arrays.asList(user);
-
         UserMapper mapper = Mappers.getMapper(UserMapper.class);
-        assertNotNull(mapper);
-
+        //when
         List<UserDto> userDtos = mapper.toDtos(users);
+        //then
+        assertNotNull(mapper);
         assertNotNull(userDtos);
-
         assertEquals(user.getId(), userDtos.get(0).getId());
         assertEquals(user.getLogin(), userDtos.get(0).getLogin());
         assertEquals(user.getFirstName(), userDtos.get(0).getFirstName());
@@ -110,7 +113,9 @@ class UserMapperTest {
     }
 
     @Test
+    @DisplayName("Test should map to entities")
     void toEntities() {
+        //given
         UserDto userDto = UserDto.builder()
                 .id(UUID.randomUUID())
                 .login("Mendi")
@@ -121,15 +126,13 @@ class UserMapperTest {
                 .status(Status.APPROVED)
                 .role(Role.VENDOR)
                 .build();
-
         List<UserDto> userDtos = Arrays.asList(userDto);
-
         UserMapper mapper = Mappers.getMapper(UserMapper.class);
-        assertNotNull(mapper);
-
+        //when
         List<User> users = mapper.toEntities(userDtos);
+        //then
+        assertNotNull(mapper);
         assertNotNull(users);
-
         assertEquals(users.get(0).getId(), userDto.getId());
         assertEquals(users.get(0).getLogin(), userDto.getLogin());
         assertEquals(users.get(0).getFirstName(), userDto.getFirstName());
@@ -138,11 +141,12 @@ class UserMapperTest {
         assertEquals(users.get(0).getPhone(), userDto.getPhone());
         assertEquals(users.get(0).getStatus(), userDto.getStatus());
         assertEquals(users.get(0).getRole(), userDto.getRole());
-
     }
 
     @Test
+    @DisplayName("Test should map to create user dto")
     void toCreateDto() {
+        //given
         User user = User.builder()
                 .id(UUID.randomUUID())
                 .login("Olson")
@@ -153,13 +157,12 @@ class UserMapperTest {
                 .password("111")
                 .role(Role.BUYER)
                 .build();
-
         UserMapper mapper = Mappers.getMapper(UserMapper.class);
-        assertNotNull(mapper);
-
+        //when
         UserCreateDto userCreateDto = mapper.toCreateDto(user);
+        //then
+        assertNotNull(mapper);
         assertNotNull(userCreateDto);
-
         assertEquals(user.getId(), userCreateDto.getId());
         assertEquals(user.getLogin(), userCreateDto.getLogin());
         assertEquals(user.getFirstName(), userCreateDto.getFirstName());
@@ -171,7 +174,9 @@ class UserMapperTest {
     }
 
     @Test
+    @DisplayName("Test should map to create entities")
     void toCreateEntity() {
+        //given
         UserCreateDto userCreateDto = UserCreateDto.builder()
                 .id(UUID.randomUUID())
                 .login("Olson")
@@ -183,11 +188,11 @@ class UserMapperTest {
                 .role(Role.BUYER)
                 .build();
         UserMapper mapper = Mappers.getMapper(UserMapper.class);
-        assertNotNull(mapper);
-
+        //when
         User user = mapper.toCreateEntity(userCreateDto);
+        //then
+        assertNotNull(mapper);
         assertNotNull(user);
-
         assertEquals(userCreateDto.getId(), user.getId());
         assertEquals(userCreateDto.getLogin(), user.getLogin());
         assertEquals(userCreateDto.getFirstName(), user.getFirstName());

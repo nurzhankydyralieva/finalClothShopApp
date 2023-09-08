@@ -18,6 +18,7 @@ public class VendorServiceImpl implements VendorService {
     private final VendorRepository vendorRepository;
     private final VendorMapper vendorMapper;
 
+
     @Override
     public List<VendorDto> findAll() {
         return vendorMapper.toDtos(vendorRepository.findAll());
@@ -32,6 +33,7 @@ public class VendorServiceImpl implements VendorService {
         }
         throw new UserNotFoundException("Vendor with id " + id + " not available");
     }
+
     @Override
     public VendorDto save(VendorDto vendorDto) {
         Vendor vendor = vendorMapper.toEntity(vendorDto);
