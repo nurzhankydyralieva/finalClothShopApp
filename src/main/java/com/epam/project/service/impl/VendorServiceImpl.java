@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -18,10 +19,18 @@ public class VendorServiceImpl implements VendorService {
     private final VendorRepository vendorRepository;
     private final VendorMapper vendorMapper;
 
-
     @Override
     public List<VendorDto> findAll() {
-        return vendorMapper.toDtos(vendorRepository.findAll());
+        List<Vendor> vendors = vendorRepository.findAll();
+        List<Vendor> orderedVendor = vendors.stream()
+                .map(vendor -> new Vendor(
+                        vendor.getId(),
+                        vendor.getName(),
+                        vendor.getProducts()
+                ))
+                .sorted()
+                .collect(Collectors.toList());
+        return vendorMapper.toDtos(orderedVendor);
     }
 
     @Override
@@ -55,7 +64,6 @@ public class VendorServiceImpl implements VendorService {
     public void deleteVendorById(Long id) {
         vendorRepository.deleteById(id);
     }
-
 
 }
 

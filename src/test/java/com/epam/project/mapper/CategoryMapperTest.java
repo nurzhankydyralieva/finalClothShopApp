@@ -2,6 +2,7 @@ package com.epam.project.mapper;
 
 import com.epam.project.model.dto.CategoryDto;
 import com.epam.project.model.entity.Category;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -16,19 +17,22 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @RunWith(SpringRunner.class)
 class CategoryMapperTest {
+    private CategoryMapper mapper;
+    private Category category;
+    private CategoryDto categoryDto;
+
+    @BeforeEach
+    public void setUp() {
+        mapper = Mappers.getMapper(CategoryMapper.class);
+        category = Category.builder().id(1L).name("fruits").build();
+        categoryDto = CategoryDto.builder().id(2L).name("vegetables").build();
+    }
 
     @Test
     @DisplayName("Test should map to dto")
     void toDto() {
-        //given
-        Category category = Category.builder()
-                .id(1L)
-                .name("fruits")
-                .build();
-        CategoryMapper mapper = Mappers.getMapper(CategoryMapper.class);
-        //when
         CategoryDto categoryDto = mapper.toDto(category);
-        //then
+
         assertNotNull(mapper);
         assertNotNull(categoryDto);
         assertEquals(categoryDto.getId(), category.getId());
@@ -38,15 +42,8 @@ class CategoryMapperTest {
     @Test
     @DisplayName("Test should map to entity")
     void toEntity() {
-        //given
-        CategoryDto categoryDto = CategoryDto.builder()
-                .id(2L)
-                .name("vegetables")
-                .build();
-        CategoryMapper mapper = Mappers.getMapper(CategoryMapper.class);
-        //when
         Category category = mapper.toEntity(categoryDto);
-        //then
+
         assertNotNull(mapper);
         assertNotNull(category);
         assertEquals(category.getId(), categoryDto.getId());
@@ -54,20 +51,14 @@ class CategoryMapperTest {
     }
 
     @Test
-    @DisplayName("Test should map to dto")
+    @DisplayName("Test should map to dtos")
     void toDtos() {
-        //given
-        Category category = Category.builder()
-                .id(1L)
-                .name("dresses")
-                .build();
         List<Category> categories = Arrays.asList(category);
-        CategoryMapper categoryMapper = Mappers.getMapper(CategoryMapper.class);
-        //when
-        List<CategoryDto> categoryDtos = categoryMapper.toDtos(categories);
-        //then
+
+        List<CategoryDto> categoryDtos = mapper.toDtos(categories);
+
         assertNotNull(categories);
-        assertNotNull(categoryMapper);
+        assertNotNull(mapper);
         assertNotNull(categoryDtos);
         assertEquals(categoryDtos.get(0).getId(), category.getId());
         assertEquals(categoryDtos.get(0).getName(), category.getName());
@@ -76,18 +67,12 @@ class CategoryMapperTest {
     @Test
     @DisplayName("Test should map to entities")
     void toEntities() {
-        //given
-        CategoryDto categoryDto = CategoryDto.builder()
-                .id(1L)
-                .name("dresses")
-                .build();
         List<CategoryDto> categoryDtos = Arrays.asList(categoryDto);
-        CategoryMapper categoryMapper = Mappers.getMapper(CategoryMapper.class);
-        //when
-        List<Category> category = categoryMapper.toEntities(categoryDtos);
-        //then
+
+        List<Category> category = mapper.toEntities(categoryDtos);
+
         assertNotNull(categoryDtos);
-        assertNotNull(categoryMapper);
+        assertNotNull(mapper);
         assertNotNull(category);
         assertEquals(category.get(0).getId(), categoryDto.getId());
         assertEquals(category.get(0).getName(), categoryDto.getName());

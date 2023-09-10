@@ -12,8 +12,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.TestPropertySource;
 
-import static org.assertj.core.api.FactoryBasedNavigableListAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
@@ -26,14 +26,21 @@ class ProductRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        vendor = Vendor.builder().id(1L).name("BMW").build();
-        product = Product.builder().id(1L).productName("Car").price(55555).quantity(1).vendor(vendor).build();
+        vendor = Vendor.builder()
+                .id(1L)
+                .name("BMW")
+                .build();
+        product = Product.builder()
+                .id(2L)
+                .productName("Car")
+                .price(55555)
+                .quantity(1)
+                .vendor(vendor).build();
         productRepository.save(product);
     }
 
     @AfterEach
     void tearDown() {
-        product = null;
         productRepository.deleteAll();
     }
 
@@ -43,5 +50,13 @@ class ProductRepositoryTest {
         productRepository.deleteByVendorId(vendor.getId());
         Product productFromDb = productRepository.findProductById(product.getId());
         assertNull(productFromDb);
+    }
+
+    @Test
+    @DisplayName("Test should find product by id")
+    void itShouldFindProductById() {
+        Product foundProductId = productRepository.findProductById(product.getId());
+
+        assertThat(foundProductId).isNotNull();
     }
 }

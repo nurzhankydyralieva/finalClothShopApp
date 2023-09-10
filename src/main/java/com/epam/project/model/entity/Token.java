@@ -1,7 +1,6 @@
 package com.epam.project.model.entity;
 
 import com.epam.project.model.enums.TokenType;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -30,7 +29,7 @@ public class Token {
     public TokenType tokenType = TokenType.BEARER;
     public boolean revoked;
     public boolean expired;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     @JsonIgnore
     public User user;

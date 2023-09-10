@@ -4,6 +4,7 @@ import com.epam.project.model.entity.User;
 import com.epam.project.model.enums.Role;
 import com.epam.project.model.enums.Status;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,19 +21,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 class UserRepositoryTest {
     @Autowired
     private UserRepository userRepository;
+    private User user;
 
-    @AfterEach
-    void tearDown() {
-        userRepository.deleteAll();
-    }
 
-    @Test
-    @DisplayName("Test should find User by Login")
-    void findUserByLogin() {
-        //given
-        String login = "Sarah";
-        User user = User.builder()
-                .login(login)
+    @BeforeEach
+    void setUp() {
+        user = User.builder()
+                .login("Sarah")
                 .firstName("Katy")
                 .lastName("Smith")
                 .email("smith@gmail.com")
@@ -42,9 +37,35 @@ class UserRepositoryTest {
                 .role(Role.BUYER)
                 .build();
         userRepository.save(user);
-        //when
-        Optional<User> expectedLogin = userRepository.findUserByLogin(login);
-        //then
+    }
+
+    @AfterEach
+    void tearDown() {
+        userRepository.deleteAll();
+    }
+
+    @Test
+    @DisplayName("Test should find User by Login")
+    void itShouldFindUserByLogin() {
+
+        Optional<User> expectedLogin = userRepository.findUserByLogin("Sarah");
+
         assertThat(expectedLogin.stream().toList()).isNotNull();
+    }
+
+    @Test
+    @DisplayName("Test should find user by id")
+    void itShouldFindUserById() {
+        User foundUserId = userRepository.findUserById(user.getId());
+
+        assertThat(foundUserId).isNotNull();
+    }
+
+    @Test
+    @DisplayName("Test should check exists by id")
+    void itShouldCheckExistsById() {
+        User foundUserId = userRepository.findUserById(user.getId());
+
+        assertThat(foundUserId).isNotNull();
     }
 }

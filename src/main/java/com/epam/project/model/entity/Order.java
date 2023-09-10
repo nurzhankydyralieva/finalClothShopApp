@@ -38,8 +38,15 @@ public class Order {
     private User user;
 
     @PrePersist
-    public void checkOrderStatus() {
+    public void statusWhenCreatingAnOrder() {
         if (status == null) {
+            status = Status.PLACED;
+        }
+    }
+
+
+    public void updateStatus() {
+        if (status == Status.PLACED) {
             status = Status.APPROVED;
         }
     }

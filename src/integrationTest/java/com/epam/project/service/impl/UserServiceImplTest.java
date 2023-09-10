@@ -41,11 +41,67 @@ class UserServiceImplTest {
     private UserMapper userMapper;
     @Mock
     private UserValidation userValidation;
+    private UUID userId = UUID.randomUUID();
+    private List<UserDto> userDtoList;
+    private List<User> userList;
+    private UserDto userDto;
+    private User user;
+    private UserCreateDto userCreateDto;
 
     @BeforeEach
     void setUp() {
         userRepository = mock(UserRepository.class);
         userService = new UserServiceImpl(userRepository, userMapper, userValidation);
+        userDtoList = Arrays.asList(UserDto.builder()
+                .id(userId)
+                .login("Tom")
+                .firstName("Olson")
+                .lastName("Smith")
+                .email("olson@gmail.com")
+                .phone("0999999999")
+                .status(Status.APPROVED)
+                .role(Role.BUYER)
+                .build());
+        userList = Arrays.asList(User.builder()
+                .id(userId)
+                .login("Tom")
+                .firstName("Olson")
+                .lastName("Smith")
+                .email("olson@gmail.com")
+                .phone("0999999999")
+                .status(Status.APPROVED)
+                .role(Role.BUYER)
+                .build());
+        userDto = UserDto.builder()
+                .id(userId)
+                .login("Tom")
+                .firstName("Olson")
+                .lastName("Smith")
+                .email("olson@gmail.com")
+                .phone("0999999999")
+                .status(Status.APPROVED)
+                .role(Role.BUYER)
+                .build();
+        user = User.builder()
+                .id(userId)
+                .login("Tom")
+                .firstName("Olson")
+                .lastName("Smith")
+                .email("olson@gmail.com")
+                .phone("0999999999")
+                .status(Status.APPROVED)
+                .role(Role.BUYER)
+                .build();
+        userCreateDto = UserCreateDto.builder()
+                .login("Sultan")
+                .firstName("Suleiman")
+                .lastName("Khan")
+                .email("khan@gmail.com")
+                .phone("0555999555")
+                .password("111")
+                .status(Status.ACTIVE)
+                .role(Role.BUYER)
+                .build();
     }
 
     @AfterEach
@@ -54,37 +110,13 @@ class UserServiceImplTest {
     }
 
     @Test
-    @DisplayName("Test should return all user")
+    @DisplayName("Test should find all users")
     void findAll() {
-        //given
-        UUID userId = UUID.randomUUID();
-        List<UserDto> userDtoList = Arrays.asList(
-                UserDto.builder()
-                        .id(userId)
-                        .login("Tom")
-                        .firstName("Olson")
-                        .lastName("Smith")
-                        .email("olson@gmail.com")
-                        .phone("0999999999")
-                        .status(Status.APPROVED)
-                        .role(Role.BUYER)
-                        .build());
-        List<User> userList = Arrays.asList(
-                User.builder()
-                        .id(userId)
-                        .login("Tom")
-                        .firstName("Olson")
-                        .lastName("Smith")
-                        .email("olson@gmail.com")
-                        .phone("0999999999")
-                        .status(Status.APPROVED)
-                        .role(Role.BUYER)
-                        .build());
         when(userRepository.findAll()).thenReturn(userList);
         when(userMapper.toDtos(userList)).thenReturn(userDtoList);
-        //when
+
         List<UserDto> allUsers = userService.findAll();
-        //then
+
         assertNotNull(allUsers);
         verify(userMapper, times(1)).toDtos(userList);
         verify(userRepository, times(1)).findAll();
@@ -93,33 +125,11 @@ class UserServiceImplTest {
     @Test
     @DisplayName("Test should find user by Id")
     void findUserById() {
-        //given
-        UUID userId = UUID.randomUUID();
-        UserDto userDto = UserDto.builder()
-                .id(userId)
-                .login("Tom")
-                .firstName("Olson")
-                .lastName("Smith")
-                .email("olson@gmail.com")
-                .phone("0999999999")
-                .status(Status.APPROVED)
-                .role(Role.BUYER)
-                .build();
-        User user = User.builder()
-                .id(userId)
-                .login("Tom")
-                .firstName("Olson")
-                .lastName("Smith")
-                .email("olson@gmail.com")
-                .phone("0999999999")
-                .status(Status.APPROVED)
-                .role(Role.BUYER)
-                .build();
         when(userRepository.findUserById(userId)).thenReturn(user);
         when(userMapper.toDto(user)).thenReturn(userDto);
-        //when
+
         UserDto userById = userService.findUserById(user.getId());
-        //then
+
         assertNotNull(userById);
         assertEquals(userId, user.getId());
         verify(userMapper, times(1)).toDto(user);
@@ -129,35 +139,13 @@ class UserServiceImplTest {
     @Test
     @DisplayName("Test should save new user to database")
     void save() {
-        //given
-        UserCreateDto userCreateDto = UserCreateDto.builder()
-                .login("Sultan")
-                .firstName("Suleiman")
-                .lastName("Khan")
-                .email("khan@gmail.com")
-                .phone("0555999555")
-                .password("111")
-                .status(Status.ACTIVE)
-                .role(Role.BUYER)
-                .build();
-        User user = User.builder()
-                .id(UUID.randomUUID())
-                .login("Sultan")
-                .firstName("Suleiman")
-                .lastName("Khan")
-                .email("khan@gmail.com")
-                .phone("0555999555")
-                .password("111")
-                .status(Status.ACTIVE)
-                .role(Role.BUYER)
-                .build();
         doNothing().when(userValidation).loginValidator(userCreateDto);
         when(userMapper.toCreateEntity(userCreateDto)).thenReturn(user);
         when(userMapper.toCreateDto(user)).thenReturn(userCreateDto);
         when(userRepository.save(user)).thenReturn(user);
-        //when
+
         UserCreateDto savedUser = userService.save(userCreateDto);
-        //then
+
         assertNotNull(savedUser);
         assertEquals(userCreateDto, savedUser);
         verify(userValidation, times(1)).loginValidator(userCreateDto);
@@ -169,36 +157,14 @@ class UserServiceImplTest {
     @Test
     @DisplayName("Test should update user in database")
     void update() {
-        //given
-        UserCreateDto userCreateDto = UserCreateDto.builder()
-                .login("Sultan")
-                .firstName("Suleiman")
-                .lastName("Khan")
-                .email("khan@gmail.com")
-                .phone("0555999555")
-                .password("111")
-                .status(Status.ACTIVE)
-                .role(Role.BUYER)
-                .build();
-        User user = User.builder()
-                .id(UUID.randomUUID())
-                .login("Sultan")
-                .firstName("Suleiman")
-                .lastName("Khan")
-                .email("khan@gmail.com")
-                .phone("0555999555")
-                .password("111")
-                .status(Status.ACTIVE)
-                .role(Role.BUYER)
-                .build();
         when(userMapper.toCreateEntity(userCreateDto)).thenReturn(user);
         when(userMapper.toCreateDto(user)).thenReturn(userCreateDto);
         when(userRepository.save(user)).thenReturn(user);
         userCreateDto.setFirstName("Mariya");
         userCreateDto.setLogin("SuperStar");
-        //when
+
         UserCreateDto updatedUser = userService.save(userCreateDto);
-        //then
+
         assertNotNull(updatedUser);
         assertEquals(userCreateDto, updatedUser);
         assertEquals("Mariya", updatedUser.getFirstName());
@@ -208,23 +174,11 @@ class UserServiceImplTest {
     @Test
     @DisplayName("Test should delete user by id")
     void deleteById() {
-        //given
-        User user = User.builder()
-                .id(UUID.randomUUID())
-                .login("Sultan")
-                .firstName("Suleiman")
-                .lastName("Khan")
-                .email("khan@gmail.com")
-                .phone("0555999555")
-                .password("111")
-                .status(Status.ACTIVE)
-                .role(Role.BUYER)
-                .build();
         userRepository.save(user);
         userRepository.deleteById(user.getId());
-        //when
+
         User deletedUser = userRepository.findUserById(user.getId());
-        //then
+
         assertThat(deletedUser).isNull();
     }
 }

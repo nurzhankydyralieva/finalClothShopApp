@@ -2,6 +2,7 @@ package com.epam.project.mapper;
 
 import com.epam.project.model.dto.CourierDto;
 import com.epam.project.model.entity.Courier;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -16,23 +17,23 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @RunWith(SpringRunner.class)
 class CourierMapperTest {
+    private CourierMapper mapper;
+    private Courier courier;
+    private CourierDto courierDto;
+
+    @BeforeEach
+    public void setUp() {
+        mapper = Mappers.getMapper(CourierMapper.class);
+        courier = Courier.builder().id(1L).firstName("Manas").lastName("Khan").phoneNumber("0999888777").idNumber("3333").build();
+        courierDto = CourierDto.builder().id(1L).firstName("Almanbet").lastName("Khan").phoneNumber("0999888777").idNumber("3333").build();
+    }
 
     @Test
     @DisplayName("Test should map to dto")
     void toDto() {
-        //given
-        Courier courier = Courier.builder()
-                .id(1L)
-                .firstName("Manac")
-                .lastName("Khan")
-                .phoneNumber("0999888777")
-                .idNumber("3333")
-                .build();
-        CourierMapper courierMapper = Mappers.getMapper(CourierMapper.class);
-        //when
-        CourierDto courierDto = courierMapper.toDto(courier);
-        //then
-        assertNotNull(courierMapper);
+        CourierDto courierDto = mapper.toDto(courier);
+
+        assertNotNull(mapper);
         assertNotNull(courierDto);
         assertEquals(courier.getId(), courierDto.getId());
         assertEquals(courier.getFirstName(), courierDto.getFirstName());
@@ -44,19 +45,9 @@ class CourierMapperTest {
     @Test
     @DisplayName("Test should map to entity")
     void toEntity() {
-        //given
-        CourierDto courierDto = CourierDto.builder()
-                .id(1L)
-                .firstName("Almanbet")
-                .lastName("Khan")
-                .phoneNumber("0999888777")
-                .idNumber("3333")
-                .build();
-        CourierMapper courierMapper = Mappers.getMapper(CourierMapper.class);
-        //when
-        Courier courier = courierMapper.toEntity(courierDto);
-        //then
-        assertNotNull(courierMapper);
+        Courier courier = mapper.toEntity(courierDto);
+
+        assertNotNull(mapper);
         assertNotNull(courier);
         assertEquals(courier.getId(), courierDto.getId());
         assertEquals(courier.getFirstName(), courierDto.getFirstName());
@@ -68,19 +59,10 @@ class CourierMapperTest {
     @Test
     @DisplayName("Test should map to dtos")
     void toDtos() {
-        //given
-        Courier courier = Courier.builder()
-                .id(1L)
-                .firstName("Sveta")
-                .lastName("Volodina")
-                .phoneNumber("0999888777")
-                .idNumber("3333")
-                .build();
         List<Courier> couriers = Arrays.asList(courier);
-        CourierMapper mapper = Mappers.getMapper(CourierMapper.class);
-        //when
+
         List<CourierDto> courierDtos = mapper.toDtos(couriers);
-        //then
+
         assertNotNull(couriers);
         assertNotNull(mapper);
         assertNotNull(courierDtos);
@@ -94,19 +76,10 @@ class CourierMapperTest {
     @Test
     @DisplayName("Test should map to entities")
     void toEntities() {
-        //given
-        CourierDto courierDto = CourierDto.builder()
-                .id(1L)
-                .firstName("Svetlana")
-                .lastName("Volodina")
-                .phoneNumber("0999888777")
-                .idNumber("3333")
-                .build();
         List<CourierDto> courierDtos = Arrays.asList(courierDto);
-        CourierMapper mapper = Mappers.getMapper(CourierMapper.class);
-        //when
+
         List<Courier> couriers = mapper.toEntities(courierDtos);
-        //then
+
         assertNotNull(courierDtos);
         assertNotNull(mapper);
         assertNotNull(couriers);

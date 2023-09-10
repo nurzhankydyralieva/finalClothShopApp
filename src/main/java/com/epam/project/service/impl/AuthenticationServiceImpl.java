@@ -43,6 +43,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .login(request.getLogin())
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
+                .age(request.getAge())
                 .email(request.getEmail())
                 .phone(request.getPhone())
                 .password(passwordEncoder.encode(request.getPassword()))

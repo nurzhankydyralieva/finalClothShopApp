@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "vendor")
-public class Vendor {
+public class Vendor implements Comparable<Vendor> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -23,4 +23,9 @@ public class Vendor {
     private String name;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Product> products;
+
+    @Override
+    public int compareTo(Vendor vendorName) {
+        return name.compareTo(vendorName.getName());
+    }
 }

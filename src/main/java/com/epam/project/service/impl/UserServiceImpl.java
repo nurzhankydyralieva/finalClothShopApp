@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -25,7 +26,6 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final UserValidation userValidation;
 
-
     @Override
     public List<UserDto> findAll() {
         var users = userRepository.findAll();
@@ -33,11 +33,44 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<UserDto> filterUserByName() {
+        List<User> userList = userRepository.findAll();
+        List<User> users = userList.stream()
+                .map(user -> new User(
+                        user.getId(),
+                        user.getLogin(),
+                        user.getFirstName(),
+                        user.getLastName(),
+                        user.getAge(),
+                        user.getEmail(),
+                        user.getPhone(),
+                        user.getStatus(),
+                        user.getRole(),
+                        user.getOrders(),
+                        user.getProducts()
+                ))
+                .sorted()
+                .limit(4)
+                .collect(Collectors.toList());
+        return userMapper.toDtos(users);
+    }
+
+    @Override
+    public List<UserDto> filterUserOlder_18() {
+        List<User> userList = userRepository.findAll();
+        List<User> userOlder_18 = userList.stream()
+                .filter(user -> user.getAge() > 18)
+                .sorted()
+                .collect(Collectors.toList());
+        return userMapper.toDtos(userOlder_18);
+    }
+
+    @Override
     public UserDto findUserById(UUID id) {
         User user = userRepository.findUserById(id);
         if (user != null) {
             return userMapper.toDto(user);
-        }else {
+        } else {
             throw new UserNotFoundException("User with id " + id + "  is not available in database");
         }
 
@@ -71,8 +104,5 @@ public class UserServiceImpl implements UserService {
     public void deleteById(UUID id) {
         userValidation.deleteValidator(id);
     }
-
-
-
 
 }

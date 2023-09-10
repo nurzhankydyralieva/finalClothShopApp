@@ -5,6 +5,7 @@ import com.epam.project.model.dto.UserDto;
 import com.epam.project.model.entity.User;
 import com.epam.project.model.enums.Role;
 import com.epam.project.model.enums.Status;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -20,12 +21,15 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @RunWith(SpringRunner.class)
 class UserMapperTest {
+    private UserMapper mapper;
+    private User user;
+    private UserDto userDto;
+    private UserCreateDto userCreateDto;
 
-    @Test
-    @DisplayName("Test should map to dto")
-    void toDto() {
-        //given
-        User user = User.builder()
+    @BeforeEach
+    public void setUp() {
+        mapper = Mappers.getMapper(UserMapper.class);
+        user = User.builder()
                 .id(UUID.randomUUID())
                 .login("Max")
                 .firstName("Maxim")
@@ -35,10 +39,33 @@ class UserMapperTest {
                 .status(Status.ACTIVE)
                 .role(Role.BUYER)
                 .build();
-        UserMapper mapper = Mappers.getMapper(UserMapper.class);
-        //when
+        userDto = UserDto.builder()
+                .id(UUID.randomUUID())
+                .login("Sultan")
+                .firstName("Maxmud")
+                .lastName("Khan")
+                .email("khan@gmail.com")
+                .phone("0555000555")
+                .status(Status.ACTIVE)
+                .role(Role.BUYER)
+                .build();
+        userCreateDto = UserCreateDto.builder()
+                .id(UUID.randomUUID())
+                .login("Olson")
+                .firstName("Sandra")
+                .lastName("Smith")
+                .email("olson@gmail.com")
+                .phone("0555000555")
+                .password("111")
+                .role(Role.BUYER)
+                .build();
+    }
+
+    @Test
+    @DisplayName("Test should map to dto")
+    void toDto() {
         UserDto userDto = mapper.toDto(user);
-        //then
+
         assertNotNull(mapper);
         assertNotNull(userDto);
         assertEquals(user.getId(), userDto.getId());
@@ -54,21 +81,8 @@ class UserMapperTest {
     @Test
     @DisplayName("Test should map to entity")
     void toEntity() {
-        //given
-        UserDto userDto = UserDto.builder()
-                .id(UUID.randomUUID())
-                .login("Sultan")
-                .firstName("Maxmud")
-                .lastName("Khan")
-                .email("khan@gmail.com")
-                .phone("0555000555")
-                .status(Status.ACTIVE)
-                .role(Role.BUYER)
-                .build();
-        UserMapper mapper = Mappers.getMapper(UserMapper.class);
-        //when
         User user = mapper.toEntity(userDto);
-        //then
+
         assertNotNull(mapper);
         assertNotNull(user);
         assertEquals(userDto.getId(), user.getId());
@@ -84,22 +98,10 @@ class UserMapperTest {
     @Test
     @DisplayName("Test should map to dtos")
     void toDtos() {
-        //given
-        User user = User.builder()
-                .id(UUID.randomUUID())
-                .login("Sarah")
-                .firstName("Jesika")
-                .lastName("Parker")
-                .email("sarah@gmail.com")
-                .phone("0555000555")
-                .status(Status.ACTIVE)
-                .role(Role.BUYER)
-                .build();
         List<User> users = Arrays.asList(user);
-        UserMapper mapper = Mappers.getMapper(UserMapper.class);
-        //when
+
         List<UserDto> userDtos = mapper.toDtos(users);
-        //then
+
         assertNotNull(mapper);
         assertNotNull(userDtos);
         assertEquals(user.getId(), userDtos.get(0).getId());
@@ -115,22 +117,10 @@ class UserMapperTest {
     @Test
     @DisplayName("Test should map to entities")
     void toEntities() {
-        //given
-        UserDto userDto = UserDto.builder()
-                .id(UUID.randomUUID())
-                .login("Mendi")
-                .firstName("Moon")
-                .lastName("Laletty")
-                .email("moon@gmail.com")
-                .phone("0999099999")
-                .status(Status.APPROVED)
-                .role(Role.VENDOR)
-                .build();
         List<UserDto> userDtos = Arrays.asList(userDto);
-        UserMapper mapper = Mappers.getMapper(UserMapper.class);
-        //when
+
         List<User> users = mapper.toEntities(userDtos);
-        //then
+
         assertNotNull(mapper);
         assertNotNull(users);
         assertEquals(users.get(0).getId(), userDto.getId());
@@ -146,21 +136,8 @@ class UserMapperTest {
     @Test
     @DisplayName("Test should map to create user dto")
     void toCreateDto() {
-        //given
-        User user = User.builder()
-                .id(UUID.randomUUID())
-                .login("Olson")
-                .firstName("Sandra")
-                .lastName("Smith")
-                .email("olson@gmail.com")
-                .phone("0555000555")
-                .password("111")
-                .role(Role.BUYER)
-                .build();
-        UserMapper mapper = Mappers.getMapper(UserMapper.class);
-        //when
         UserCreateDto userCreateDto = mapper.toCreateDto(user);
-        //then
+
         assertNotNull(mapper);
         assertNotNull(userCreateDto);
         assertEquals(user.getId(), userCreateDto.getId());
@@ -176,21 +153,8 @@ class UserMapperTest {
     @Test
     @DisplayName("Test should map to create entities")
     void toCreateEntity() {
-        //given
-        UserCreateDto userCreateDto = UserCreateDto.builder()
-                .id(UUID.randomUUID())
-                .login("Olson")
-                .firstName("Sandra")
-                .lastName("Smith")
-                .email("olson@gmail.com")
-                .phone("0555000555")
-                .password("111")
-                .role(Role.BUYER)
-                .build();
-        UserMapper mapper = Mappers.getMapper(UserMapper.class);
-        //when
         User user = mapper.toCreateEntity(userCreateDto);
-        //then
+
         assertNotNull(mapper);
         assertNotNull(user);
         assertEquals(userCreateDto.getId(), user.getId());

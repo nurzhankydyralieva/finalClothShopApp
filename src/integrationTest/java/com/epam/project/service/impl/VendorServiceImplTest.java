@@ -34,11 +34,32 @@ class VendorServiceImplTest {
     private VendorRepository vendorRepository;
     @Mock
     private VendorMapper vendorMapper;
+    private Long vendorId = 1L;
+    private List<VendorDto> vendorDtoList;
+    private List<Vendor> vendorList;
+    private VendorDto vendorDto;
+    private Vendor vendor;
 
     @BeforeEach
     void setUp() {
         vendorRepository = mock(VendorRepository.class);
         vendorService = new VendorServiceImpl(vendorRepository, vendorMapper);
+        vendorDtoList = Arrays.asList(VendorDto.builder()
+                .id(vendorId)
+                .name("Bugatti")
+                .build());
+        vendorList = Arrays.asList(Vendor.builder()
+                .id(vendorId)
+                .name("Bugatti")
+                .build());
+        vendorDto = VendorDto.builder()
+                .id(vendorId)
+                .name("Rolls-Royce")
+                .build();
+        vendor = Vendor.builder()
+                .id(vendorId)
+                .name("Rolls-Royce")
+                .build();
     }
 
     @AfterEach
@@ -49,22 +70,11 @@ class VendorServiceImplTest {
     @Test
     @DisplayName("Test should find all vendors")
     void findAll() {
-        Long vendorId = 1L;
-        List<VendorDto> vendorDtoList = Arrays.asList(
-                VendorDto.builder()
-                        .id(vendorId)
-                        .name("Bugatti")
-                        .build());
-        List<Vendor> vendorList = Arrays.asList(
-                Vendor.builder()
-                        .id(vendorId)
-                        .name("Bugatti")
-                        .build());
         when(vendorRepository.findAll()).thenReturn(vendorList);
         when(vendorMapper.toDtos(vendorList)).thenReturn(vendorDtoList);
-        //when
+
         List<VendorDto> allVendors = vendorService.findAll();
-        //then
+
         assertNotNull(allVendors);
         verify(vendorMapper, times(1)).toDtos(vendorList);
         verify(vendorRepository, times(1)).findAll();
@@ -73,21 +83,11 @@ class VendorServiceImplTest {
     @Test
     @DisplayName("Test should find vendor by Id")
     void findVendorById() {
-        //given
-        Long vendorId = 2L;
-        VendorDto vendorDto = VendorDto.builder()
-                .id(vendorId)
-                .name("Rolls-Royce")
-                .build();
-        Vendor vendor = Vendor.builder()
-                .id(vendorId)
-                .name("Rolls-Royce")
-                .build();
         when(vendorRepository.findVendorById(vendorId)).thenReturn(vendor);
         when(vendorMapper.toDto(vendor)).thenReturn(vendorDto);
-        //when
+
         VendorDto foundVendorId = vendorService.findVendorById(vendor.getId());
-        //then
+
         assertNotNull(foundVendorId);
         assertEquals(vendorId, foundVendorId.getId());
         verify(vendorMapper, times(1)).toDto(vendor);
@@ -97,20 +97,12 @@ class VendorServiceImplTest {
     @Test
     @DisplayName("Test should save new vendor to database")
     void itShouldSaveVendor() {
-        //given
-        VendorDto vendorDto = VendorDto.builder()
-                .name("Cadillac")
-                .build();
-        Vendor vendor = Vendor.builder()
-                .id(3L)
-                .name("Cadillac")
-                .build();
         when(vendorMapper.toEntity(vendorDto)).thenReturn(vendor);
         when(vendorMapper.toDto(vendor)).thenReturn(vendorDto);
         when(vendorRepository.save(vendor)).thenReturn(vendor);
-        //when
+
         VendorDto savedVendor = vendorService.save(vendorDto);
-        //then
+
         assertNotNull(savedVendor);
         assertEquals(vendorDto, savedVendor);
         verify(vendorMapper, times(1)).toEntity(vendorDto);
@@ -121,21 +113,14 @@ class VendorServiceImplTest {
     @Test
     @DisplayName("Test should update vendor")
     void update() {
-        //given
-        VendorDto vendorDto = VendorDto.builder()
-                .name("Cadillac")
-                .build();
-        Vendor vendor = Vendor.builder()
-                .id(4L)
-                .name("Cadillac")
-                .build();
+
         when(vendorMapper.toEntity(vendorDto)).thenReturn(vendor);
         when(vendorMapper.toDto(vendor)).thenReturn(vendorDto);
         when(vendorRepository.save(vendor)).thenReturn(vendor);
         vendorDto.setName("Cadillac Luxury Vehicles");
-        //when
+
         VendorDto updatedVendor = vendorService.save(vendorDto);
-        //then
+
         assertNotNull(updatedVendor);
         assertEquals(vendorDto, updatedVendor);
         assertEquals("Cadillac Luxury Vehicles", updatedVendor.getName());
@@ -144,15 +129,11 @@ class VendorServiceImplTest {
     @Test
     @DisplayName("Test should delete vendor by id")
     void deleteVendorById() {
-        Vendor vendor = Vendor.builder()
-                .id(4L)
-                .name("Cadillac")
-                .build();
         vendorRepository.save(vendor);
         vendorRepository.deleteById(vendor.getId());
-        //when
+
         Vendor deletedVendor = vendorRepository.findVendorById(vendor.getId());
-        //then
+
         assertThat(deletedVendor).isNull();
     }
 }

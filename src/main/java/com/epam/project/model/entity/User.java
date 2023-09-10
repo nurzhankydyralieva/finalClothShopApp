@@ -21,7 +21,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 @Table(name = "_user")
-public class User implements UserDetails {
+public class User implements UserDetails, Comparable<User> {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
@@ -33,6 +33,8 @@ public class User implements UserDetails {
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
+    @Column(name = "age")
+    private int age;
     @Column(name = "email")
     private String email;
     @Column(name = "phone")
@@ -50,7 +52,19 @@ public class User implements UserDetails {
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Product> products;
 
-
+    public User(UUID id, String login, String firstName, String lastName, int age, String email, String phone, Status status, Role role, Set<Order> orders, Set<Product> products) {
+        this.id = id;
+        this.login = login;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.email = email;
+        this.phone = phone;
+        this.status = status;
+        this.role = role;
+        this.orders = orders;
+        this.products = products;
+    }
 
     @PrePersist
     public void checkStatus() {
@@ -96,5 +110,10 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public int compareTo(User userFirstName) {
+        return firstName.compareTo(userFirstName.getFirstName());
     }
 }

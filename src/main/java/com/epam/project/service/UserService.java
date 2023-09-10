@@ -16,4 +16,6 @@ public interface UserService {
     UserCreateDto update(UserCreateDto userCreateDto);
 
     void deleteById(UUID id);
+    List<UserDto> filterUserOlder_18();
+    List<UserDto> filterUserByName();
 }

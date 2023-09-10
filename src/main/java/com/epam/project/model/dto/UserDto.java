@@ -6,10 +6,7 @@ import com.epam.project.model.enums.Role;
 import com.epam.project.model.enums.Status;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.OneToMany;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,6 +30,9 @@ public class UserDto {
     @NotBlank(message = "Last name should not be null")
     @Size(min = 3, message = "LastName should be at least 3 chars")
     private String lastName;
+    @Min(0)
+    @Max(100)
+    private int age;
     @NotBlank
     @Email(message = "Invalid email address")
     private String email;

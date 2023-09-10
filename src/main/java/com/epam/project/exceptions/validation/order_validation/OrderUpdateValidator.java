@@ -3,8 +3,10 @@ package com.epam.project.exceptions.validation.order_validation;
 import com.epam.project.exceptions.StatusNotAllowedException;
 import com.epam.project.exceptions.enums.Code;
 import com.epam.project.model.dto.OrderDto;
+import com.epam.project.model.entity.Order;
 import com.epam.project.model.entity.User;
 import com.epam.project.model.enums.Status;
+import com.epam.project.repository.OrderRepository;
 import com.epam.project.repository.UserRepository;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
@@ -22,9 +24,12 @@ import java.util.UUID;
 public class OrderUpdateValidator {
     private final Validator validator;
     private final UserRepository userRepository;
+
+
     public <T> void orderUpdateValidation(OrderDto orderDto, UUID id) {
         User user = userRepository.findUserById(id);
         Status userStatus = user.getStatus();
+
         if (id != null) {
             Set<ConstraintViolation<UUID>> result = validator.validate(id);
             if (!userStatus.equals(Status.ACTIVE)) {

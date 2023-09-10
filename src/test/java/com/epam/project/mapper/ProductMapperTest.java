@@ -2,6 +2,7 @@ package com.epam.project.mapper;
 
 import com.epam.project.model.dto.ProductDto;
 import com.epam.project.model.entity.Product;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -17,21 +18,23 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @RunWith(SpringRunner.class)
 class ProductMapperTest {
 
+    private ProductMapper mapper;
+    private Product product;
+    private ProductDto productDto;
+
+    @BeforeEach
+    public void setUp() {
+        mapper = Mappers.getMapper(ProductMapper.class);
+        product = Product.builder().id(1L).productName("Car").price(88888).quantity(1).build();
+        productDto = ProductDto.builder().id(2L).productName("Airplane").price(99999).quantity(2).build();
+    }
+
     @Test
     @DisplayName("Test should map to dto")
     void toDto() {
-        //given
-        Product product = Product.builder()
-                .id(1L)
-                .productName("Car")
-                .price(88888)
-                .quantity(1)
-                .build();
-        ProductMapper productMapper = Mappers.getMapper(ProductMapper.class);
-        //when
-        ProductDto productDto = productMapper.toDto(product);
-        //then
-        assertNotNull(productMapper);
+        ProductDto productDto = mapper.toDto(product);
+
+        assertNotNull(mapper);
         assertNotNull(productDto);
         assertEquals(product.getId(), productDto.getId());
         assertEquals(product.getProductName(), productDto.getProductName());
@@ -42,18 +45,9 @@ class ProductMapperTest {
     @Test
     @DisplayName("Test should map to entity")
     void toEntity() {
-        //given
-        ProductDto productDto = ProductDto.builder()
-                .id(2L)
-                .productName("Airplane")
-                .price(99999)
-                .quantity(2)
-                .build();
-        ProductMapper productMapper = Mappers.getMapper(ProductMapper.class);
-        //when
-        Product product = productMapper.toEntity(productDto);
-        //then
-        assertNotNull(productMapper);
+        Product product = mapper.toEntity(productDto);
+
+        assertNotNull(mapper);
         assertEquals(productDto.getId(), product.getId());
         assertEquals(productDto.getProductName(), product.getProductName());
         assertEquals(productDto.getPrice(), product.getPrice());
@@ -63,19 +57,11 @@ class ProductMapperTest {
     @Test
     @DisplayName("Test should map to dtos")
     void toDtos() {
-        //given
-        Product product = Product.builder()
-                .id(3L)
-                .productName("Train")
-                .price(100000)
-                .quantity(3)
-                .build();
         List<Product> products = Arrays.asList(product);
-        ProductMapper productMapper = Mappers.getMapper(ProductMapper.class);
-        //when
-        List<ProductDto> productDtos = productMapper.toDtos(products);
-        //then
-        assertNotNull(productMapper);
+
+        List<ProductDto> productDtos = mapper.toDtos(products);
+
+        assertNotNull(mapper);
         assertNotNull(productDtos);
         assertEquals(product.getId(), productDtos.get(0).getId());
         assertEquals(product.getProductName(), productDtos.get(0).getProductName());
@@ -86,25 +72,16 @@ class ProductMapperTest {
     @Test
     @DisplayName("Test should map to entities")
     void toEntities() {
-        //given
-        ProductDto productDto = ProductDto.builder()
-                .id(3L)
-                .productName("Train")
-                .price(100000)
-                .quantity(3)
-                .build();
         List<ProductDto> productDtos = Arrays.asList(productDto);
-        ProductMapper productMapper = Mappers.getMapper(ProductMapper.class);
-        //when
-        List<Product> products = productMapper.toEntities(productDtos);
-        //then
+
+        List<Product> products = mapper.toEntities(productDtos);
+
         assertNotNull(productDtos);
-        assertNotNull(productMapper);
+        assertNotNull(mapper);
         assertNotNull(products);
         assertEquals(products.get(0).getId(), productDto.getId());
         assertEquals(products.get(0).getProductName(), productDto.getProductName());
         assertEquals(products.get(0).getPrice(), productDto.getPrice());
         assertEquals(products.get(0).getQuantity(), productDto.getQuantity());
-
     }
 }

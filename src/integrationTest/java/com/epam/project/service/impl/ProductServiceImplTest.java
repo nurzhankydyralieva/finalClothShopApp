@@ -37,11 +37,40 @@ class ProductServiceImplTest {
     private ProductMapper productMapper;
     @Mock
     private VendorRepository vendorRepository;
+    private List<ProductDto> productDtoList;
+    private List<Product> productList;
+    private Long productId = 1L;
+    private ProductDto productDto;
+    private Product product;
 
     @BeforeEach
     void setUp() {
         productRepository = mock(ProductRepository.class);
         productService = new ProductServiceImpl(productRepository, productMapper, vendorRepository);
+        productDtoList = Arrays.asList(ProductDto.builder()
+                .id(productId)
+                .productName("Jewelry")
+                .price(88888)
+                .quantity(1)
+                .build());
+        productList = Arrays.asList(Product.builder()
+                .id(productId)
+                .productName("Jewelry")
+                .price(88888)
+                .quantity(1)
+                .build());
+        productDto = ProductDto.builder()
+                .id(productId)
+                .productName("Chanel")
+                .price(88888)
+                .quantity(1)
+                .build();
+        product = Product.builder()
+                .id(productId)
+                .productName("Chanel")
+                .price(88888)
+                .quantity(1)
+                .build();
     }
 
     @AfterEach
@@ -52,24 +81,11 @@ class ProductServiceImplTest {
     @Test
     @DisplayName("Test should find all products in database")
     void findAll() {
-        //given
-        List<ProductDto> productDtoList = Arrays.asList(ProductDto.builder()
-                .id(1L)
-                .productName("Jewelry")
-                .price(88888)
-                .quantity(1)
-                .build());
-        List<Product> productList = Arrays.asList(Product.builder()
-                .id(1L)
-                .productName("Jewelry")
-                .price(88888)
-                .quantity(1)
-                .build());
         when(productRepository.findAll()).thenReturn(productList);
         when(productMapper.toDtos(productList)).thenReturn(productDtoList);
-        //when
+
         List<ProductDto> allProducts = productService.findAll();
-        //then
+
         assertNotNull(allProducts);
         verify(productMapper, times(1)).toDtos(productList);
         verify(productRepository, times(1)).findAll();
@@ -78,25 +94,11 @@ class ProductServiceImplTest {
     @Test
     @DisplayName("Test should find product by id")
     void findById() {
-        //given
-        Long productId = 5L;
-        ProductDto productDto = ProductDto.builder()
-                .id(productId)
-                .productName("Chanel")
-                .price(88888)
-                .quantity(1)
-                .build();
-        Product product = Product.builder()
-                .id(productId)
-                .productName("Chanel")
-                .price(88888)
-                .quantity(1)
-                .build();
         when(productMapper.toDto(product)).thenReturn(productDto);
         when(productRepository.findProductById(productId)).thenReturn(product);
-        //when
+
         ProductDto foundId = productService.findById(product.getId());
-        //then
+
         assertNotNull(foundId);
         assertEquals(productId, product.getId());
         verify(productMapper, times(1)).toDto(product);
@@ -106,28 +108,15 @@ class ProductServiceImplTest {
     @Test
     @DisplayName("Test should save product to database")
     void save() {
-        //given
-        ProductDto productDto = ProductDto.builder()
-                .productName("Airplane")
-                .price(88888)
-                .quantity(1)
-                .build();
-
-        Product product = Product.builder()
-                .id(1L)
-                .productName("Airplane")
-                .price(88888)
-                .quantity(1)
-                .build();
         when(productMapper.toEntity(productDto)).thenReturn(product);
         when(productMapper.toDto(product)).thenReturn(productDto);
         when(productRepository.save(product)).thenReturn(product);
-        //when
+
         ProductDto savedProduct = productService.save(productDto);
-        //then
+
         assertNotNull(savedProduct);
         assertEquals(productDto.getId(), savedProduct.getId());
-        assertEquals("Airplane", savedProduct.getProductName());
+        assertEquals("Chanel", savedProduct.getProductName());
         assertEquals(88888, savedProduct.getPrice());
         assertEquals(1, savedProduct.getQuantity());
     }
@@ -135,27 +124,15 @@ class ProductServiceImplTest {
     @Test
     @DisplayName("Test should update product")
     void update() {
-        ProductDto productDto = ProductDto.builder()
-                .productName("Airplane")
-                .price(88888)
-                .quantity(1)
-                .build();
-
-        Product product = Product.builder()
-                .id(1L)
-                .productName("Airplane")
-                .price(88888)
-                .quantity(1)
-                .build();
         when(productMapper.toDto(product)).thenReturn(productDto);
         when(productMapper.toEntity(productDto)).thenReturn(product);
         when(productRepository.save(product)).thenReturn(product);
         productDto.setPrice(99999);
         productDto.setProductName("updatedProduct");
         productDto.setQuantity(19);
-        //when
+
         ProductDto updatedProduct = productService.save(productDto);
-        //then
+
         assertNotNull(updatedProduct);
         assertEquals(productDto, updatedProduct);
         assertEquals("updatedProduct", updatedProduct.getProductName());
@@ -179,9 +156,9 @@ class ProductServiceImplTest {
                 .build();
         productRepository.save(product);
         productRepository.deleteByVendorId(3L);
-        //when
+
         Product deletedProduct = productRepository.findProductById(product.getId());
-        //then
+
         assertThat(deletedProduct).isNull();
     }
 }

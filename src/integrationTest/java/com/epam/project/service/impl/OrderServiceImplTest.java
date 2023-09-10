@@ -42,12 +42,50 @@ class OrderServiceImplTest {
     private OrderSaveValidator validator;
     @Mock
     private OrderUpdateValidator orderUpdateValidator;
+    private List<Order> orders;
+    private List<OrderDto> orderDtoList;
+    private Order order;
+    private OrderDto orderDto;
+    private Long orderId =1L;
+    private UUID userId = UUID.randomUUID();
 
 
     @BeforeEach
     void setUp() {
         orderRepository = mock(OrderRepository.class);
         orderService = new OrderServiceImpl(orderRepository, orderMapper, validator, orderUpdateValidator);
+        orders = Arrays.asList(Order.builder()
+                .id(1L)
+                .shipDate(LocalDate.now())
+                .createdAt(LocalDate.now())
+                .updatedAt(LocalDate.now())
+                .status(Status.APPROVED)
+                .complete(true)
+                .build());
+        orderDtoList = Arrays.asList(OrderDto.builder()
+                .id(1L)
+                .shipDate(LocalDate.now())
+                .createdAt(LocalDate.now())
+                .updatedAt(LocalDate.now())
+                .status(Status.APPROVED)
+                .complete(true)
+                .build());
+        order = Order.builder()
+                .id(orderId)
+                .shipDate(LocalDate.now())
+                .createdAt(LocalDate.now())
+                .updatedAt(LocalDate.now())
+                .status(Status.APPROVED)
+                .complete(true)
+                .build();
+        orderDto = OrderDto.builder()
+                .id(orderId)
+                .shipDate(LocalDate.now())
+                .createdAt(LocalDate.now())
+                .updatedAt(LocalDate.now())
+                .status(Status.APPROVED)
+                .complete(true)
+                .build();
     }
 
     @AfterEach
@@ -58,28 +96,11 @@ class OrderServiceImplTest {
     @Test
     @DisplayName("Test should find all orders")
     void findAll() {
-        //given
-        List<Order> orders = Arrays.asList(Order.builder()
-                .id(1L)
-                .shipDate(LocalDate.now())
-                .createdAt(LocalDate.now())
-                .updatedAt(LocalDate.now())
-                .status(Status.APPROVED)
-                .complete(true)
-                .build());
-        List<OrderDto> orderDtoList = Arrays.asList(OrderDto.builder()
-                .id(1L)
-                .shipDate(LocalDate.now())
-                .createdAt(LocalDate.now())
-                .updatedAt(LocalDate.now())
-                .status(Status.APPROVED)
-                .complete(true)
-                .build());
         when(orderRepository.findAll()).thenReturn(orders);
         when(orderMapper.toDtos(orders)).thenReturn(orderDtoList);
-        //when
+
         List<OrderDto> allOrders = orderService.findAll();
-        //then
+
         assertNotNull(allOrders);
         verify(orderMapper, times(1)).toDtos(orders);
         verify(orderRepository, times(1)).findAll();
@@ -88,29 +109,11 @@ class OrderServiceImplTest {
     @Test
     @DisplayName("Test should find order by id")
     void findById() {
-        //given
-        Long orderId = 1L;
-        Order order = Order.builder()
-                .id(orderId)
-                .shipDate(LocalDate.now())
-                .createdAt(LocalDate.now())
-                .updatedAt(LocalDate.now())
-                .status(Status.APPROVED)
-                .complete(true)
-                .build();
-        OrderDto orderDto = OrderDto.builder()
-                .id(orderId)
-                .shipDate(LocalDate.now())
-                .createdAt(LocalDate.now())
-                .updatedAt(LocalDate.now())
-                .status(Status.APPROVED)
-                .complete(true)
-                .build();
         when(orderRepository.findOrderById(orderId)).thenReturn(order);
         when(orderMapper.toDto(order)).thenReturn(orderDto);
-        //when
+
         OrderDto foundOrderById = orderService.findById(order.getId());
-        //then
+
         assertNotNull(foundOrderById);
         assertEquals(orderId, order.getId());
         verify(orderMapper, times(1)).toDto(order);
@@ -120,31 +123,13 @@ class OrderServiceImplTest {
     @Test
     @DisplayName("Test should save order to database")
     void saveOrder() {
-        //when
-        UUID userId = UUID.randomUUID();
-        Order order = Order.builder()
-                .id(1L)
-                .shipDate(LocalDate.now())
-                .createdAt(LocalDate.now())
-                .updatedAt(LocalDate.now())
-                .status(Status.APPROVED)
-                .complete(true)
-                .build();
-        OrderDto orderDto = OrderDto.builder()
-                .id(1L)
-                .shipDate(LocalDate.now())
-                .createdAt(LocalDate.now())
-                .updatedAt(LocalDate.now())
-                .status(Status.APPROVED)
-                .complete(true)
-                .build();
         doNothing().when(validator).orderSaveValidation(orderDto, userId);
         when(orderMapper.toEntity(orderDto)).thenReturn(order);
         when(orderMapper.toDto(order)).thenReturn(orderDto);
         when(orderRepository.save(order)).thenReturn(order);
-        //when
+
         OrderDto savedOrder = orderService.saveOrder(orderDto, userId);
-        //then
+
         assertNotNull(savedOrder);
         assertEquals(orderDto, savedOrder);
         verify(validator, times(1)).orderSaveValidation(orderDto, userId);
@@ -156,31 +141,14 @@ class OrderServiceImplTest {
     @Test
     @DisplayName("Test should update order")
     void update() {
-        UUID userId = UUID.randomUUID();
-        Order order = Order.builder()
-                .id(1L)
-                .shipDate(LocalDate.now())
-                .createdAt(LocalDate.now())
-                .updatedAt(LocalDate.now())
-                .status(Status.APPROVED)
-                .complete(true)
-                .build();
-        OrderDto orderDto = OrderDto.builder()
-                .id(1L)
-                .shipDate(LocalDate.now())
-                .createdAt(LocalDate.now())
-                .updatedAt(LocalDate.now())
-                .status(Status.APPROVED)
-                .complete(true)
-                .build();
         when(orderMapper.toEntity(orderDto)).thenReturn(order);
         when(orderMapper.toDto(order)).thenReturn(orderDto);
         when(orderRepository.save(order)).thenReturn(order);
         orderDto.setUpdatedAt(LocalDate.now());
         orderDto.setStatus(Status.CANCELLED);
-        //when
+
         OrderDto updatedOrder = orderService.saveOrder(orderDto, userId);
-        //then
+
         assertNotNull(updatedOrder);
         assertEquals(orderDto, updatedOrder);
         assertEquals(Status.CANCELLED, updatedOrder.getStatus());
@@ -189,19 +157,11 @@ class OrderServiceImplTest {
     @Test
     @DisplayName("Test should delete order by id")
     void deleteById() {
-        Order order = Order.builder()
-                .id(5L)
-                .shipDate(LocalDate.now())
-                .createdAt(LocalDate.now())
-                .updatedAt(LocalDate.now())
-                .status(Status.APPROVED)
-                .complete(true)
-                .build();
         orderRepository.save(order);
         orderRepository.deleteById(order.getId());
-        //when
+
         OrderDto deletedOrder = orderService.findById(order.getId());
-        //then
+
         assertThat(deletedOrder).isNull();
     }
 }

@@ -28,6 +28,15 @@ public class UserController {
         return ResponseEntity.ok(userService.findAll());
     }
 
+    @GetMapping("/filter")
+    public ResponseEntity<List<UserDto>> filterUserByAge(){
+        return ResponseEntity.ok(userService.filterUserOlder_18());
+    }
+    @GetMapping("/by_name")
+    public ResponseEntity<List<UserDto>> filterUserByName(){
+        return ResponseEntity.ok(userService.filterUserByName());
+    }
+
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('buyer:read')")
     public ResponseEntity<UserDto> findUserById(@PathVariable UUID id) {

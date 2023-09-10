@@ -7,6 +7,7 @@ import com.epam.project.exceptions.validation.order_validation.OrderUpdateValida
 import com.epam.project.mapper.OrderMapper;
 import com.epam.project.model.dto.OrderDto;
 import com.epam.project.model.entity.Order;
+import com.epam.project.model.enums.Status;
 import com.epam.project.repository.OrderRepository;
 import com.epam.project.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -31,8 +32,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDto findById(Long id) {
-//        Order order = orderRepository.findById(id)
-//                .orElseThrow(() -> new RuntimeException("The order with id " + id + " not found"));
         Order order = orderRepository.findOrderById(id);
         return orderMapper.toDto(order);
     }
@@ -44,7 +43,7 @@ public class OrderServiceImpl implements OrderService {
         validator.orderSaveValidation(orderDto, id);
         Order order = orderMapper.toEntity(orderDto);
         //бэкенде поставить статус, чтоб работал
-        order.checkOrderStatus();
+        order.statusWhenCreatingAnOrder();
         order = orderRepository.save(order);
         return orderMapper.toDto(order);
     }
@@ -55,13 +54,14 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderMapper.toEntity(orderDto);
         orderUpdateValidator.orderUpdateValidation(orderDto, id);
         order.setUpdatedAt(LocalDate.now());
+        order.setStatus(Status.APPROVED);
         order = orderRepository.save(order);
         return orderMapper.toDto(order);
     }
 
     @Override
     public void deleteById(Long id) {
-         orderRepository.deleteById(id);
+        orderRepository.deleteById(id);
 
     }
 
