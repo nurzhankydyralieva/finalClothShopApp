@@ -7,8 +7,9 @@ pipeline {
     stage('Scan') {
       steps {
         withSonarQubeEnv(installationName: 'SonarQube') { 
-          bat './mvnw clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar'
-          bat 'sonar.java.binaries=.'
+          bat """./mvnw clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar \
+          -Dsonar.java.binaries=. \"""
+        
         }
       }
     }
