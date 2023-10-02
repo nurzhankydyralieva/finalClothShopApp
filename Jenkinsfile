@@ -16,15 +16,15 @@ pipeline {
     }
     stage('SonarQube Analysis') {
       steps {
-         scannerHome = tool name: 'SonarQubeScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallattion'
+         SCANNER_HOME = tool name: 'SonarQubeScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallattion'
         withSonarQubeEnv(installationName: 'SonarQube') { 
-            scannerCmd = "${scannerHome}/bin/sonar-scanner"
-            projectKey = 'Sonar_finalClothShopApp'
-            projectName = 'Sonar_finalClothShopApp'
+            SCANNER_CMD = "${SCANNER_HOME}/bin/sonar-scanner"
+            PROJECT_KEY = 'Sonar_finalClothShopApp'
+            PROJECT_NAME = 'Sonar_finalClothShopApp'
           
           bat """
-             ${scannerCmd} -Dsonar.projectKey=${projectKey} \
-             -Dsonar.projectName=${projectName} \
+             ${SCANNER_CMD} -Dsonar.projectKey=${PROJECT_KEY} \
+             -Dsonar.projectName=${PROJECT_NAME} \
              -Dsonar.java.binaries=. \
              -Dsonar.sources=src \
               """
