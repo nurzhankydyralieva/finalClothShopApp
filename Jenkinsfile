@@ -7,7 +7,9 @@ pipeline {
     stage('Scan') {
       steps {
         withSonarQubeEnv(installationName: 'SonarQube') { 
-          sh './mvnw clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar'
+           sh" ${SCANNER_HOME**}**/bin/sonar-scanner \
+           -Dsonar.projectKey=Sonar_finalClothShopApp \
+           -Dsonar.sources=. "
         }
       }
     }
