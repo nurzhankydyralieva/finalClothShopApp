@@ -18,9 +18,9 @@ pipeline {
       steps {
          
         withSonarQubeEnv(installationName: 'SonarQube') { 
-            SCANNER_CMD = "${SCANNER_HOME}/bin/sonar-scanner"
-            PROJECT_KEY = 'Sonar_finalClothShopApp'
-            PROJECT_NAME = 'Sonar_finalClothShopApp'
+          def SCANNER_CMD = "${SCANNER_HOME}/bin/sonar-scanner"
+          def PROJECT_KEY = 'Sonar_finalClothShopApp'
+          def PROJECT_NAME = 'Sonar_finalClothShopApp'
           
           echo "Project Key: ${PROJECT_KEY}"
           echo "Project Name: ${PROJECT_NAME}"
