@@ -4,33 +4,13 @@ pipeline {
     buildDiscarder(logRotator(numToKeepStr: '5'))
   }
   stages {
-    stage('Checkout'){
+    stage('Scan') {
       steps {
-        checkout scm
-      }
-    }
-    stage('Build'){
-      steps {
-        bat 'javac -source 1.8 -target 1.8 -d target/classes src/**/*.java'
-      }
-    }
-    stage('SonarQube Analysis') {
-      steps {
-         scannerHome = tool name: 'SonarQubeScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallattion'
         withSonarQubeEnv(installationName: 'SonarQube') { 
-          def scannerCmd = "${scannerHome}/bin/sonar-scanner.bat"
-          def projectKey = 'Sonar_finalClothShopApp'
-          def projectName = 'Sonar_finalClothShopApp'
-          
-          bat """
-           ${scannerCmd} -Dsonar.projectKey=${projectKey} \
-             -Dsonar.projectName=${projectName} \
-             -Dsonar.java.binaries=. \
-             -Dsonar.sources=src \
-              """
+          bat './mvnw clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar'
+          bat ' -Dsonar.java.binaries=. \'
         }
       }
     }
   }
 }
- 
