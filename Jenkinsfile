@@ -7,7 +7,7 @@ pipeline {
     stage('Scan') {
       steps {
         withSonarQubeEnv(installationName: 'SonarQube') { 
-           sh" ${SCANNER_HOME**}**/bin/sonar-scanner \
+           sh" ${SCANNER_HOME}/bin/sonar-scanner \
            -Dsonar.projectKey=Sonar_finalClothShopApp \
            -Dsonar.sources=. "
         }
