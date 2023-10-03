@@ -3,9 +3,6 @@ pipeline {
     environment {
         PATH ="$PATH:/opt/apache-maven-3.9.2/bin"
     }
-   options {
-    buildDiscarder(logRotator(numToKeepStr: '5'))
-  }
     tools {
       maven "MAVEN_HOME"
     }
