@@ -15,12 +15,6 @@ pipeline {
                 git url: "https://github.com/nurzhankydyralieva/finalClothShopApp.git", branch: 'main'
             }
         }
-        stage('Build'){
-            steps{
-                git url: "https://github.com/nurzhankydyralieva/finalClothShopApp.git"
-                bat "mvn -Dmaven.test.failure.ignore=true clean compile install"
-            }
-        }
         stage("Test") {
             steps {
                 git url: "https://github.com/nurzhankydyralieva/finalClothShopApp.git"
