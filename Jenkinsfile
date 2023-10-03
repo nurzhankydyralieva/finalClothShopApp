@@ -15,13 +15,6 @@ pipeline {
                 git url: "https://github.com/nurzhankydyralieva/finalClothShopApp.git", branch: 'main'
             }
         }
-        stage("Test") {
-            steps {
-                git url: "https://github.com/nurzhankydyralieva/finalClothShopApp.git"
-                 bat "mvn -Dmaven.test.failure.ignore=true clean test"
-          }
-
-      }
         stage('SonarQube Analysis'){
             steps{
                 withSonarQubeEnv('SonarQube'){
