@@ -23,17 +23,6 @@ pipeline {
                 }
             }
         }
-        stage("Deploy") {
-            steps {
-            git url: "https://github.com/nurzhankydyralieva/finalClothShopApp.git"
-            bat "mvn -Dmaven.test.failure.ignore=true clean install"
-          }
-        post {
-            success {
-                archiveArtifacts 'target/*.jar'
-            }
-          }
-      }
     }
 }
 
