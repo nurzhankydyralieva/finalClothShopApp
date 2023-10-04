@@ -176,12 +176,12 @@
                 <version>2.5.0</version>
                 <configuration>
                     <schemaVersion>v2</schemaVersion>
-                    <resourceGroup>helloworld-1648163079675-rg</resourceGroup>
-                    <appName>helloworld-1648163079675</appName>
+                    <resourceGroup>cloth-shop</resourceGroup>
+                    <appName>cloth-shop</appName>
                     <pricingTier>P2v2</pricingTier>
                     <region>centralus</region>
                     <runtime>
-                        <os>Linux</os>
+                        <os>Windows</os>
                         <javaVersion>Java 17</javaVersion>
                         <webContainer>Tomcat 10.0</webContainer>
                     </runtime>
