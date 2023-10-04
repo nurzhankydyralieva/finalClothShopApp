@@ -12,6 +12,7 @@
     <artifactId>ClothShopApp_JWT</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>ClothShopApp_JWT</name>
+    <packaging>war</packaging>
     <description>JWT Auth Server</description>
     <properties>
         <java.version>17</java.version>
