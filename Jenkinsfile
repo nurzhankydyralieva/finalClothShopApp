@@ -21,14 +21,14 @@ pipeline {
          stage('Clean'){
             steps{
                 echo "Cleaning..."
-                bat 'Maven clean'
+                bat 'mvn clean'
             } 
         }
 
         stage('Test'){
             steps{
                 echo "Runnig tests..."
-                bat 'Maven test'
+                bat 'mvn test'
             }
         }
          
@@ -53,7 +53,7 @@ pipeline {
         stage('Build'){
             steps{
                 echo "Creating build"
-                bat 'Maven build'
+                bat 'mvn build'
             }
         }
     }
