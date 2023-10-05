@@ -1,11 +1,13 @@
 pipeline {
     agent any
-    environment {
-        PATH ="$PATH:/opt/apache-maven-3.9.2/bin"
-    }
     tools {
       maven "MAVEN_HOME"
     }
+    
+    environment {
+        PATH ="$PATH:/opt/apache-maven-3.9.2/bin"
+    }
+    
     stages{
         stage('GetCode'){
             steps{
@@ -15,6 +17,21 @@ pipeline {
                 url: "https://github.com/nurzhankydyralieva/finalClothShopApp.git"
             }
         }
+
+         stage('Clean'){
+            steps{
+                echo "Cleaning..."
+                bat 'Maven clean'
+            } 
+        }
+
+        stage('Test'){
+            steps{
+                echo "Runnig tests..."
+                bat 'Maven test'
+            }
+        }
+         
         stage('SonarQube Analysis'){
             steps{
                 withSonarQubeEnv('SonarQube'){
@@ -24,20 +41,7 @@ pipeline {
                 }
             }
         }
-        stage('Clean'){
-            steps{
-                echo "Cleaning..."
-                bat 'Maven clean'
-            } 
-        }
-        
-        stage('Test'){
-            steps{
-                echo "Runnig tests..."
-                bat 'Maven test'
-            }
-        }
-        
+   
         stage('Quality gate'){
             steps{
                 timeout(time: 2, unit: 'MINUTES'){
@@ -55,7 +59,7 @@ pipeline {
     }
     post{
         success{
-            deploy adapters: [tomcat9(credentialsId: 'local-tomcat-creds', path: '',
+            deploy adapters: [tomcat8(credentialsId: 'deploy', path: '',
             url: 'http://localhost:8080')],
             contextPath: '/finalClothShopApp',
             onFailure: false,
