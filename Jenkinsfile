@@ -24,21 +24,21 @@ pipeline {
                 }
             }
         }
-        stage("Clean"){
+        stage('Clean'){
             steps{
                 echo "Cleaning..."
                 bat 'Maven clean'
             } 
         }
         
-        stage("Test"){
+        stage('Test'){
             steps{
                 echo "Runnig tests..."
                 bat 'Maven test'
             }
         }
         
-        stage("Quality gate"){
+        stage('Quality gate'){
             steps{
                 timeout(time: 2, unit: 'MINUTES'){
                     waitForQualityGate abortPipeline: true
@@ -46,7 +46,7 @@ pipeline {
             }
         }
 
-        stage("Build"){
+        stage('Build'){
             steps{
                 echo "Creating build"
                 bat 'Maven build'
