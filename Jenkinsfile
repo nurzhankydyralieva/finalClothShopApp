@@ -41,20 +41,14 @@ pipeline {
                 }
             }
         }
-
-     stage("Quality Gate"){
+        stage('Quality gate'){
             steps{
-                timeout(time: 2, unit: 'MINUTES') {
-                    script {
-                       qg = waitForQualityGate()
-                        if (qg.status != 'OK') {
-                            error "Pipeline aborted due to quality gate failure: ${qg.status}"
-                    }
-                 }
-               
+                timeout(time: 2, unit: 'MINUTES'){
+                    waitForQualityGate abortPipeline: true
                 }
             }
-         }
+        }
+
         stage('Build'){
             steps{
                 echo "Creating build"
