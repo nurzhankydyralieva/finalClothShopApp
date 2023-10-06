@@ -7,14 +7,15 @@ pipeline {
     environment {
         PATH ="$PATH:/opt/apache-maven-3.8.3/bin"
     }
-    stage('GetCode'){
-        steps{
-            git branch: 'main',
-            changelog: false,
-            poll: false,
-            url: "https://github.com/nurzhankydyralieva/finalClothShopApp.git"
+    stages{
+        stage('GetCode'){
+            steps{
+                git branch: 'main',
+                changelog: false,
+                poll: false,
+                url: "https://github.com/nurzhankydyralieva/finalClothShopApp.git"
+            }
         }
-    }
         
         stage('Build with Maven'){
             steps{
