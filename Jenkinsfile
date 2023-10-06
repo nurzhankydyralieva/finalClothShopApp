@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+     agent {
+             docker {
+                    image 'maven:3.8.3'
+                }
+            }
+
     tools {
       maven "MAVEN_HOME"
     }
@@ -7,17 +12,6 @@ pipeline {
         PATH ="$PATH:/opt/apache-maven-3.8.3/bin"
     }
     stages{
-         stage('Back-end') {
-            agent {
-                any {
-                    image 'node:12.16.2'
-                    args '-p 3000:3000'
-                }
-            }
-            steps {
-                sh 'mvn --version'
-            }
-        }
         stage('GetCode'){
             steps{
                 git branch: 'main',
@@ -26,9 +20,15 @@ pipeline {
                 url: "https://github.com/nurzhankydyralieva/finalClothShopApp.git"
             }
         }
+          stage('Build'){
+            steps{
+                echo "Building..."
+                sh 'mvn — version'
+            }
+        }
       stage('Build with Maven'){
             steps{
-                echo "Cleaning and installing"
+                echo "Cleaning..."
                  sh 'mvn clean'
             }
         }
