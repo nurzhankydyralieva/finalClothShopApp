@@ -12,7 +12,7 @@ pipeline {
          stage('Clean Workspace'){
             steps{
                 echo "Cleaning the workspace"
-                deleteDir()
+                bat 'mvn clean'
             } 
         }
         stage('GetCode'){
@@ -26,6 +26,7 @@ pipeline {
         
         stage('Build with Maven'){
             steps{
+                echo "Cleaning and installing"
                 bat 'mvn clean install'
             }
         }
