@@ -16,7 +16,7 @@ pipeline {
             }
         }
 
-        stage('Build with Maven'){
+        node('Build with Maven'){
             steps{
                 echo "Cleaning and installing"
                 bat "mvn clean install"
