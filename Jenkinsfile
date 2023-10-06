@@ -3,10 +3,16 @@ pipeline {
     tools {
       maven "MAVEN_HOME"
     }
-    
+ 
     environment {
-        PATH ="$PATH:/opt/apache-maven-3.9.2/bin"
+        PATH ="$PATH:/opt/apache-maven-3.8.3/bin"
     }
+           stage('Clean Workspace'){
+            steps{
+                echo "Cleaning the workspace"
+                deleteDir()
+            } 
+        }
     
     stages{
         stage('GetCode'){
@@ -17,17 +23,16 @@ pipeline {
                 url: "https://github.com/nurzhankydyralieva/finalClothShopApp.git"
             }
         }
-
-         stage('Clean'){
+        
+        stage('Build with Maven'){
             steps{
-                echo "Cleaning..."
-                bat 'mvn clean'
-            } 
+                bat 'mvn clean install'
+            }
         }
-
+        
         stage('Test'){
             steps{
-                echo "Runnig tests..."
+                echo "Runnig tests"
                 bat 'mvn test'
             }
         }
@@ -41,6 +46,7 @@ pipeline {
                 }
             }
         }
+        
         stage('Quality gate'){
             steps{
                 timeout(time: 2, unit: 'MINUTES'){
@@ -56,6 +62,7 @@ pipeline {
             }
         }
     }
+    
     post{
         success{
             deploy adapters: [tomcat8(credentialsId: 'deploy', path: '',
