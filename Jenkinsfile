@@ -20,16 +20,11 @@ pipeline {
                 url: "https://github.com/nurzhankydyralieva/finalClothShopApp.git"
             }
         }
-          stage('Build'){
-            steps{
-                echo "Building..."
-                sh 'mvn — version'
-            }
-        }
+          
       stage('Build with Maven'){
             steps{
                 echo "Cleaning..."
-                 sh 'mvn clean'
+                 sh 'mvn version clean'
             }
         }
 
