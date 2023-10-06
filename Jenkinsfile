@@ -3,10 +3,13 @@ pipeline {
     tools {
       maven "MAVEN_HOME"
     }
- 
-    environment {
-        PATH ="$PATH:/opt/apache-maven-3.8.3/bin"
+       environment {
+        JDBC_URL = credentials('JDBC_URL')
+        JDBC_USER = credentials('JDBC_USER')
+        JDBC_PASSWORD = credentials('JDBC_PASSWORD')
     }
+ 
+   
     stages{
         stage('GetCode'){
             steps{
