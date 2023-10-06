@@ -7,22 +7,14 @@ pipeline {
     environment {
         PATH ="$PATH:/opt/apache-maven-3.8.3/bin"
     }
-          
-    stages{
-         stage('Clean Workspace'){
-            steps{
-                echo "Cleaning the workspace"
-                bat 'mvn clean'
-            } 
+    stage('GetCode'){
+        steps{
+            git branch: 'main',
+            changelog: false,
+            poll: false,
+            url: "https://github.com/nurzhankydyralieva/finalClothShopApp.git"
         }
-        stage('GetCode'){
-            steps{
-                git branch: 'main',
-                changelog: false,
-                poll: false,
-                url: "https://github.com/nurzhankydyralieva/finalClothShopApp.git"
-            }
-        }
+    }
         
         stage('Build with Maven'){
             steps{
