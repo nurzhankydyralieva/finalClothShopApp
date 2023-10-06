@@ -9,7 +9,7 @@ pipeline {
     stages{
          stage('Back-end') {
             agent {
-                docker {
+                any {
                     image 'node:12.16.2'
                     args '-p 3000:3000'
                 }
