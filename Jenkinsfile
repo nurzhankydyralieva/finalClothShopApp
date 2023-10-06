@@ -16,10 +16,11 @@ pipeline {
             }
         }
 
-        node('Build with Maven'){
+        stage('Build with Maven'){
             steps{
                 echo "Cleaning and installing"
-                bat "mvn clean install"
+                bat "${MAVEN_HOME}\\bin\\mvn -B clean"
+
             }
         }
         
