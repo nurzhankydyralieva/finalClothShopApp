@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-        label 'Build-In Node'
-    }
+    agent any
     tools {
       maven "MAVEN_HOME"
     }
