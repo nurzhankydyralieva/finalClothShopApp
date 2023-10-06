@@ -16,6 +16,13 @@ pipeline {
                 url: "https://github.com/nurzhankydyralieva/finalClothShopApp.git"
             }
         }
+        stage("Compile") {
+    steps {
+       sh """
+         mvn help:evaluate -Dexpression=project.version -q -DforceStdout > version.txt
+       """
+    }
+}
         
         stage('Build with Maven'){
             steps{
