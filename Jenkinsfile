@@ -7,6 +7,14 @@ pipeline {
         PATH ="$PATH:/opt/apache-maven-3.8.3/bin"
     }
     stages{
+         stage('Back-end') {
+            agent {
+                docker { image 'maven:3.9.4-eclipse-temurin-17-alpine' }
+            }
+            steps {
+                sh 'mvn --version'
+            }
+        }
         stage('GetCode'){
             steps{
                 git branch: 'main',
@@ -18,7 +26,7 @@ pipeline {
       stage('Build with Maven'){
             steps{
                 echo "Cleaning and installing"
-                 bat 'mvn clean'
+                 sh 'mvn clean'
             }
         }
 
