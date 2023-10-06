@@ -7,14 +7,14 @@ pipeline {
     environment {
         PATH ="$PATH:/opt/apache-maven-3.8.3/bin"
     }
-           stage('Clean Workspace'){
+          
+    stages{
+         stage('Clean Workspace'){
             steps{
                 echo "Cleaning the workspace"
                 deleteDir()
             } 
         }
-    
-    stages{
         stage('GetCode'){
             steps{
                 git branch: 'main',
