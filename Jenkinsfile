@@ -21,7 +21,7 @@ pipeline {
          stage('Clean'){
             steps{
                 echo "Cleaning..."
-                bat "mvn clean"
+                bat 'maven clean'
             } 
         }
 
