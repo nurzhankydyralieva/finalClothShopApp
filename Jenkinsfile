@@ -19,7 +19,7 @@ pipeline {
         stage('Build with Maven'){
             steps{
                 echo "Cleaning and installing"
-                sh "./mvnw clean install"
+                sh "mvn clean install"
             }
         }
         
