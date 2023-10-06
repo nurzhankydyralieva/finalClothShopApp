@@ -15,15 +15,17 @@ pipeline {
                 url: "https://github.com/nurzhankydyralieva/finalClothShopApp.git"
             }
         }
-
-        stage('Build with Maven'){
-            steps{
-                echo "Cleaning and installing"
-                bat "${MAVEN_HOME}\\bin\\mvn -B clean"
-
-            }
+         stage('Run on Windows') {
+        when {
+            expression { isWindows() }
         }
-        
+         steps{
+                echo "Cleaning and installing"
+                 bat 'mvn clean'
+            }
+    }
+
+ 
         stage('Test'){
             steps{
                 echo "Runnig tests"
