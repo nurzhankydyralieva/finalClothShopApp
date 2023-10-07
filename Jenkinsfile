@@ -3,7 +3,7 @@ pipeline {
       maven "MAVEN_HOME"
       jdk "JAVA_HOME"
     }
-    agent { docker { image 'maven:3.9.4-eclipse-temurin-17-alpine' } }
+    agent { any { image 'maven:3.8.3-eclipse-temurin-17-alpine' } }
     stages {
         stage('build') {
             steps {
