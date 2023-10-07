@@ -3,14 +3,9 @@ pipeline {
 	tools{
 		maven "MAVEN_HOME"
 		jdk "JAVA_HOME"
+		tool "myDocker"
 	}
 	stages {
-		stage('Initialize'){
-			steps {
-				def dockerHome = tool 'myDocker'
-				env.PATH = "${dockerHome}/bin:${env.PATH}"
-			}
-		}
 		stage('Maven Install') {
 			agent {
 				docker {
