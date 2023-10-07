@@ -17,8 +17,8 @@ pipeline {
         stage('Build with Maven'){
             steps{
                 echo "Cleaning..."
-                bat 'mvn clean install'
-                bat 'docker build -t my-maven-app .'
+                sh 'mvn clean install'
+                sh 'docker build -t my-maven-app .'
             }
         }
 
