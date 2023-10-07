@@ -3,7 +3,6 @@ pipeline {
 	tools{
 		maven "MAVEN_HOME"
 		jdk "JAVA_HOME"
-		tool "myDocker"
 	}
 	stages {
 		stage('Maven Install') {
