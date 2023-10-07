@@ -2,7 +2,7 @@ pipeline {
 	agent any
 	tools{
 		maven "MAVEN_HOME"
-		jdk "jdk17"
+		jdk "JAVA_HOME"
 	}
   stages {
   	stage('Maven Install') {
