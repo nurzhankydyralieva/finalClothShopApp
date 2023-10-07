@@ -14,11 +14,14 @@ pipeline {
             }
         }
 
-        stage('build') {
-            steps {
-                sh 'mvn -version'
+        stage('Build with Maven'){
+            steps{
+                echo "Cleaning..."
+                bat 'mvn clean install'
+                bat 'docker build -t my-maven-app .'
             }
         }
+
     }
 
 }
