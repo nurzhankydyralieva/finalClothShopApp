@@ -12,18 +12,22 @@ pipeline {
                 git url: "https://github.com/nurzhankydyralieva/finalClothShopApp.git", branch: 'main'
             }
         }
-        stage('Build'){
-            steps{
-                bat "mvn -Dmaven.test.failure.ignore=true install"
-            }
-        }
-        stage("Test") {
+
+       stage('Clean'){
             steps {
+                echo "Cleaning..."
+                bat "mvn clean"
+          }
+       }
+
+       stage("Test") {
+            steps {
+                echo "Testing..."
                  bat "mvn -Dmaven.test.failure.ignore=true test"
           }
-
       }
-        stage('SonarQube Analysis'){
+
+    stage('SonarQube Analysis'){
             steps{
                 withSonarQubeEnv('SonarQube'){
                     echo "Running static code scanner"
@@ -33,6 +37,18 @@ pipeline {
                 }
             }
         }
+     stage('Quaility gate') {
+        	steps {
+        			waitForQualityGate abortPipeline: true
+        	}
+        }
+        stage('Build'){
+            steps{
+                bat "mvn -Dmaven.test.failure.ignore=true install"
+            }
+        }
+ 
+        
         stage("Deploy") {
             steps {
             bat "mvn -Dmaven.test.failure.ignore=true package"
