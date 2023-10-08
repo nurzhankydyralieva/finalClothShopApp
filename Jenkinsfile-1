@@ -38,10 +38,14 @@ pipeline {
             bat "mvn -Dmaven.test.failure.ignore=true package"
           }
         post {
-            success {
-                archiveArtifacts 'target/*.jar'
-            }
+              success {
+            deploy adapters: [tomcat8(credentialsId: 'local-tomcat-creds', path: '',
+            url: 'http://localhost:8080')],
+            contextPath: '/api',
+            onFailure: false,
+            war: '**/*.war'
           }
+        }
       }
     }
 }
