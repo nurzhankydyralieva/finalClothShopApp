@@ -1,3 +1,4 @@
-FROM node:16-alpine
+FROM node:latest
+WORKDIR /ProgramData/Jenkins/.jenkins/workspace
 
 RUN apk add -U git curl
