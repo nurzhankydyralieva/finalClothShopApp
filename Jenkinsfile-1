@@ -19,8 +19,7 @@ pipeline {
         }
         stage("Test") {
             steps {
-                git url: "https://github.com/nurzhankydyralieva/finalClothShopApp.git"
-                 bat "mvn -Dmaven.test.failure.ignore=true clean test"
+                 bat "mvn -Dmaven.test.failure.ignore=true test"
           }
 
       }
@@ -33,8 +32,7 @@ pipeline {
         }
         stage("Deploy") {
             steps {
-            git url: "https://github.com/nurzhankydyralieva/finalClothShopApp.git"
-            bat "mvn -Dmaven.test.failure.ignore=true clean install package"
+            bat "mvn -Dmaven.test.failure.ignore=true package"
           }
         post {
             success {
