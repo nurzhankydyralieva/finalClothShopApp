@@ -1,0 +1,47 @@
+pipeline {
+    agent any
+    environment {
+        PATH ="$PATH:/opt/apache-maven-3.9.2/bin"
+    }
+    tools {
+      maven "MAVEN_HOME"
+    }
+    stages{
+        stage('GetCode'){
+            steps{
+                git url: "https://github.com/nurzhankydyralieva/finalClothShopApp.git", branch: 'main'
+            }
+        }
+        stage('Build'){
+            steps{
+                git url: "https://github.com/nurzhankydyralieva/finalClothShopApp.git"
+                bat "mvn -Dmaven.test.failure.ignore=true clean compile install"
+            }
+        }
+        stage("Test") {
+            steps {
+                git url: "https://github.com/nurzhankydyralieva/finalClothShopApp.git"
+                 bat "mvn -Dmaven.test.failure.ignore=true clean test"
+          }
+
+      }
+        stage('SonarQube Analysis'){
+            steps{
+                withSonarQubeEnv('SonarQube'){
+                    bat "mvn sonar:sonar"
+                }
+            }
+        }
+        stage("Deploy") {
+            steps {
+            git url: "https://github.com/nurzhankydyralieva/finalClothShopApp.git"
+            bat "mvn -Dmaven.test.failure.ignore=true clean install package"
+          }
+        post {
+            success {
+                archiveArtifacts 'target/*.jar'
+            }
+          }
+      }
+    }
+}
