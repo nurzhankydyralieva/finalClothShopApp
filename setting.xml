@@ -3,15 +3,15 @@
 	<servers>
 		<server>
                         <!-- server id should be equal to repository id -->
-			<id>NEXUS</id>
+			<id>jenkins-user</id>
                         <!-- default nexus deploy user -->
-			<username>admin</username>
-			<password>nurzhan</password>
+			<username>jenkins-user</username>
+			<password>jenkins</password>
 		</server>
 		<server>
-                        <id>NEXUS</id>
-                        <username>admin</username>
-                        <password>nurzhan</password>
+                        <id>jenkins-user</id>
+                        <username>jenkins-user</username>
+                        <password>jenkins</password>
                 </server>
 	</servers>
 </settings>
